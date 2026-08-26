@@ -43,6 +43,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build GitNexus native dependencies
+        run: pnpm rebuild @ladybugdb/core gitnexus tree-sitter
+
       - name: Analyze GitNexus graph
         run: pnpm graph:analyze
 
