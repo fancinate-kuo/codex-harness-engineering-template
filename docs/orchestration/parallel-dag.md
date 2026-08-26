@@ -1,0 +1,14 @@
+# Parallel DAG Scheduler
+
+v7 upgrades the Harness from a linear runner into a dependency-aware DAG scheduler.
+
+Planner
+→ Impact
+→ Backend / Frontend / Database (parallel)
+→ Integration
+→ Test / Review (parallel)
+→ PR
+
+The scheduler identifies runnable nodes, respects pool limits, isolates mutable work
+with git worktrees, persists node state, retries only retryable nodes, and blocks
+downstream nodes when dependencies fail.

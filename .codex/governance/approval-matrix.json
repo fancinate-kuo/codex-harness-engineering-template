@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "GOV-001",
+      "condition": "risk == critical",
+      "decision": "manual-only"
+    },
+    {
+      "id": "GOV-002",
+      "condition": "destructiveDatabaseChange == true",
+      "decision": "approval-required"
+    },
+    {
+      "id": "GOV-003",
+      "condition": "authBoundaryChange == true",
+      "decision": "approval-required"
+    },
+    {
+      "id": "GOV-004",
+      "condition": "publicContractBreakingChange == true",
+      "decision": "approval-required"
+    },
+    {
+      "id": "GOV-005",
+      "condition": "risk == low",
+      "decision": "auto"
+    },
+    {
+      "id": "GOV-006",
+      "condition": "risk == medium",
+      "decision": "auto-with-gates"
+    }
+  ]
+}

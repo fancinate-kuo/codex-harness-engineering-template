@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "name": "default-multi-agent",
+  "stages": [
+    {
+      "id": "planner",
+      "agent": "planner",
+      "state": "planning",
+      "mutable": false,
+      "requires": [],
+      "produces": [
+        "plan.json"
+      ],
+      "retryable": false
+    },
+    {
+      "id": "impact",
+      "agent": "impact",
+      "state": "impact_analysis",
+      "mutable": false,
+      "requires": [
+        "plan.json"
+      ],
+      "produces": [
+        "impact.json"
+      ],
+      "retryable": false
+    },
+    {
+      "id": "implementation",
+      "agent": "implementation",
+      "state": "implementing",
+      "mutable": true,
+      "requires": [
+        "plan.json",
+        "impact.json",
+        "@checkpoint"
+      ],
+      "produces": [
+        "implementation-summary.json"
+      ],
+      "retryable": true
+    },
+    {
+      "id": "test",
+      "agent": "test",
+      "state": "testing",
+      "mutable": false,
+      "requires": [
+        "implementation-summary.json"
+      ],
+      "produces": [
+        "test-report.json"
+      ],
+      "retryable": true
+    },
+    {
+      "id": "review",
+      "agent": "review",
+      "state": "reviewing",
+      "mutable": false,
+      "requires": [
+        "test-report.json"
+      ],
+      "produces": [
+        "review-report.json"
+      ],
+      "retryable": false
+    },
+    {
+      "id": "fix",
+      "agent": "fix",
+      "state": "fixing",
+      "mutable": true,
+      "conditional": "review_or_test_failed",
+      "requires": [
+        "review-report.json",
+        "test-report.json"
+      ],
+      "produces": [
+        "fix-report.json"
+      ],
+      "retryable": true
+    },
+    {
+      "id": "pr",
+      "agent": "pr",
+      "state": "ready_for_pr",
+      "mutable": false,
+      "requires": [
+        "test-report.json",
+        "review-report.json",
+        "@handoff",
+        "@harness_verify"
+      ],
+      "produces": [
+        "pr-summary.json"
+      ],
+      "retryable": false
+    }
+  ]
+}

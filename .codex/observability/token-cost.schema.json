@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Token and Cost Metric",
+  "type": "object",
+  "required": [
+    "taskId",
+    "timestamp"
+  ],
+  "properties": {
+    "taskId": {
+      "type": "string"
+    },
+    "nodeId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "agent": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "inputTokens": {
+      "type": "number"
+    },
+    "outputTokens": {
+      "type": "number"
+    },
+    "cachedInputTokens": {
+      "type": "number"
+    },
+    "estimatedCostUsd": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "style": "modular-monolith",
+  "repository": "monorepo",
+  "dependencyRules": {
+    "allowed": [
+      "api -> application",
+      "application -> domain",
+      "infrastructure -> application",
+      "infrastructure -> domain"
+    ],
+    "forbidden": [
+      "domain -> infrastructure",
+      "domain -> api",
+      "domain -> web",
+      "module-private -> foreign-module-private"
+    ]
+  }
+}

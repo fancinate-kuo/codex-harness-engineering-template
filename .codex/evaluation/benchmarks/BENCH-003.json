@@ -1,0 +1,35 @@
+{
+  "id": "BENCH-003",
+  "title": "Auth boundary change triggers governance",
+  "category": "security",
+  "input": {
+    "requirement": "Change moderator authorization boundary",
+    "signals": {
+      "backendChange": true,
+      "frontendChange": false,
+      "databaseChange": false,
+      "uiBehaviorChange": false,
+      "securitySensitive": true,
+      "docsOnly": false,
+      "risk": "high"
+    }
+  },
+  "expectations": {
+    "requiredNodes": [
+      "planner",
+      "impact",
+      "backend",
+      "security-review",
+      "review",
+      "pr"
+    ],
+    "forbiddenNodes": [],
+    "requiredTests": [
+      "integration",
+      "security"
+    ],
+    "maxRetries": 1,
+    "maxReplans": 1,
+    "mustPassHarnessVerify": true
+  }
+}

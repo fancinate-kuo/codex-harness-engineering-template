@@ -1,0 +1,45 @@
+name: multi-agent-feature
+stages:
+  - agent: planner
+    state: planning
+    output: plan.json
+
+  - agent: impact
+    state: impact_analysis
+    output: impact.json
+
+  - gate: pre_implementation
+    requires:
+      - plan.json
+      - impact.json
+      - checkpoint
+
+  - agent: implementation
+    state: implementing
+    worktree: required
+    output: implementation-summary.json
+
+  - agent: test
+    state: testing
+    output: test-report.json
+
+  - agent: review
+    state: reviewing
+    output: review-report.json
+
+  - conditional:
+      when: review_or_test_failed
+      agent: fix
+      state: fixing
+      max_retries: 2
+
+  - gate: pre_pr
+    requires:
+      - tests_passed
+      - review_passed
+      - harness_verify
+      - structured_handoff
+
+  - agent: pr
+    state: ready_for_pr
+    output: pr-summary.json

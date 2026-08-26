@@ -1,0 +1,15 @@
+{
+  "query": "module-blast-radius",
+  "input": {
+    "moduleId": "forum"
+  },
+  "returns": [
+    "features",
+    "capabilities",
+    "apis",
+    "tables",
+    "tests",
+    "adrs",
+    "owners"
+  ]
+}

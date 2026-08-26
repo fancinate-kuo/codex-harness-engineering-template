@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "maxAutomaticRetriesPerStage": 2,
+  "parallelism": {
+    "readOnlyAgents": 3,
+    "mutableAgents": 1
+  },
+  "worktreeRequiredFor": [
+    "implementation",
+    "fix"
+  ],
+  "requiredGates": {
+    "beforeImplementation": [
+      "plan",
+      "business-impact",
+      "code-impact",
+      "checkpoint"
+    ],
+    "beforePR": [
+      "tests",
+      "review",
+      "harness-verify",
+      "handoff"
+    ]
+  }
+}

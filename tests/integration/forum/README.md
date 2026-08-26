@@ -1,0 +1,2 @@
+# Forum integration tests
+

@@ -1,0 +1,26 @@
+{
+  "id": "stale-gitnexus-index",
+  "kind": "failure-pattern",
+  "title": "Stale GitNexus index can invalidate impact analysis",
+  "content": "Refresh GitNexus before final impact validation when structural code changes occurred.",
+  "tags": [
+    "gitnexus",
+    "graph",
+    "impact"
+  ],
+  "scope": {
+    "featureId": null,
+    "moduleId": null,
+    "paths": []
+  },
+  "source": {
+    "type": "graph",
+    "ref": "template-guidance"
+  },
+  "confidence": "high",
+  "status": "active",
+  "createdAt": "2026-08-26T00:00:00Z",
+  "updatedAt": "2026-08-26T00:00:00Z",
+  "expiresAt": null,
+  "supersedes": null
+}

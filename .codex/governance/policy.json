@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "automationModes": {
+    "low": "auto",
+    "medium": "auto-with-gates",
+    "high": "approval-required",
+    "critical": "manual-only"
+  },
+  "protectedPaths": [
+    "infra/",
+    "migrations/",
+    ".azure-pipelines/",
+    ".github/workflows/",
+    "packages/contracts/",
+    "docs/adr/"
+  ],
+  "blockedPatterns": [
+    "disable security check",
+    "skip authorization",
+    "hardcode secret",
+    "drop production table"
+  ],
+  "approvalRequiredFor": [
+    "destructive-database-change",
+    "auth-boundary-change",
+    "permission-model-change",
+    "production-deployment",
+    "secret-or-credential-change",
+    "public-contract-breaking-change"
+  ]
+}

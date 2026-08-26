@@ -1,0 +1,18 @@
+name: requirement-to-implementation
+steps:
+  - identify_requirement
+  - resolve_feature
+  - business_graph_query
+  - capability_and_module_scope
+  - gitnexus_context
+  - gitnexus_impact
+  - read_adrs
+  - implementation_plan
+  - checkpoint
+  - implement
+  - affected_tests
+  - detect_changes
+  - refresh_business_graph_if_needed
+  - refresh_code_graph_if_needed
+  - harness_verify
+  - structured_handoff

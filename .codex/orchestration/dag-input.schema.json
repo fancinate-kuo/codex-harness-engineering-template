@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dynamic DAG Input",
+  "type": "object",
+  "required": [
+    "taskId"
+  ],
+  "properties": {
+    "taskId": {
+      "type": "string"
+    },
+    "requirementId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "featureId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "signals": {
+      "type": "object",
+      "properties": {
+        "backendChange": {
+          "type": "boolean"
+        },
+        "frontendChange": {
+          "type": "boolean"
+        },
+        "databaseChange": {
+          "type": "boolean"
+        },
+        "uiBehaviorChange": {
+          "type": "boolean"
+        },
+        "securitySensitive": {
+          "type": "boolean"
+        },
+        "docsOnly": {
+          "type": "boolean"
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical",
+            "unknown"
+          ]
+        }
+      }
+    }
+  }
+}

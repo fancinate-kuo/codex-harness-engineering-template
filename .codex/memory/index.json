@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "id": "stale-gitnexus-index",
+      "kind": "failure-pattern",
+      "file": ".codex/memory/records/failure-pattern__stale-gitnexus-index.json",
+      "status": "active",
+      "title": "Stale GitNexus index can invalidate impact analysis"
+    }
+  ]
+}

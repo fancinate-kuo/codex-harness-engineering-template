@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "defaults": {
+    "always": [
+      "planner",
+      "impact",
+      "review",
+      "pr"
+    ],
+    "testForCodeChanges": true,
+    "integrationForParallelMutableBranches": true
+  },
+  "rules": [
+    {
+      "when": "backendChange",
+      "add": [
+        "backend"
+      ]
+    },
+    {
+      "when": "frontendChange",
+      "add": [
+        "frontend"
+      ]
+    },
+    {
+      "when": "databaseChange",
+      "add": [
+        "migration"
+      ]
+    },
+    {
+      "when": "uiBehaviorChange",
+      "add": [
+        "playwright"
+      ]
+    },
+    {
+      "when": "securitySensitive",
+      "add": [
+        "security-review"
+      ]
+    },
+    {
+      "when": "docsOnly",
+      "replaceWith": [
+        "planner",
+        "docs",
+        "review",
+        "pr"
+      ]
+    }
+  ],
+  "riskRules": {
+    "high": [
+      "security-review",
+      "test"
+    ],
+    "critical": [
+      "security-review",
+      "test"
+    ]
+  }
+}

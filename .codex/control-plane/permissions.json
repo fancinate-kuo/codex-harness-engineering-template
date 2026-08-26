@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "roles": {
+    "viewer": [
+      "read:overview",
+      "read:tasks",
+      "read:metrics",
+      "read:evaluation"
+    ],
+    "operator": [
+      "read:*",
+      "run:task"
+    ],
+    "approver": [
+      "read:*",
+      "approve:task"
+    ],
+    "admin": [
+      "*"
+    ]
+  }
+}

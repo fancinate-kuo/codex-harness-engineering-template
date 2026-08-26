@@ -1,0 +1,11 @@
+{
+  "query": "requirement-to-tests",
+  "input": {
+    "requirementId": "REQ-FORUM-001"
+  },
+  "path": [
+    "Requirement",
+    "Feature",
+    "Test"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "views": {
+    "overview": [
+      "taskCounts",
+      "runningNodes",
+      "blockedTasks",
+      "pendingApprovals",
+      "benchmarkPassRate"
+    ],
+    "taskDetail": [
+      "task",
+      "dag",
+      "governance",
+      "approval",
+      "feedback",
+      "metrics",
+      "audit",
+      "memoryContext"
+    ],
+    "evaluation": [
+      "benchmarkSummary",
+      "recentRegressions",
+      "variantComparisons"
+    ]
+  }
+}

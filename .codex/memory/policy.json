@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "writeRules": {
+    "allowedKinds": [
+      "decision",
+      "failure-pattern",
+      "fix-pattern",
+      "review-finding",
+      "graph-lesson",
+      "migration-caveat",
+      "operational-note",
+      "exception"
+    ],
+    "minimumConfidenceForAutoReuse": "medium",
+    "authoritativeSources": [
+      "adr"
+    ],
+    "defaultStatus": "active"
+  },
+  "reusePriority": [
+    "current-code-and-tests",
+    "adr",
+    "authoritative-memory",
+    "high-confidence-memory",
+    "medium-confidence-memory",
+    "low-confidence-memory"
+  ],
+  "neverAutoPromote": [
+    "speculation",
+    "unverified-review-comment",
+    "single-flaky-test",
+    "temporary-workaround"
+  ]
+}

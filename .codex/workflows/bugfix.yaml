@@ -1,0 +1,11 @@
+name: bug-fix
+steps:
+  - reproduce
+  - identify_affected_scope
+  - checkpoint
+  - regression_test
+  - minimal_fix
+  - affected_tests
+  - architecture_validation
+  - harness_verify
+  - structured_handoff

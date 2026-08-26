@@ -1,0 +1,67 @@
+openapi: 3.1.0
+info:
+  title: Codex Harness Control Plane API
+  version: 0.14.0
+paths:
+  /health:
+    get:
+      responses:
+        '200':
+          description: OK
+  /tasks:
+    get:
+      responses:
+        '200':
+          description: Task list
+  /tasks/{taskId}:
+    get:
+      parameters:
+        - in: path
+          name: taskId
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Task detail
+  /tasks/{taskId}/dag:
+    get:
+      responses:
+        '200':
+          description: Compiled DAG and current state
+  /tasks/{taskId}/approvals:
+    get:
+      responses:
+        '200':
+          description: Approval state
+  /tasks/{taskId}/approvals/{decision}:
+    post:
+      parameters:
+        - in: path
+          name: decision
+          required: true
+          schema:
+            type: string
+            enum: [approved, rejected]
+      responses:
+        '200':
+          description: Approval updated
+  /tasks/{taskId}/run:
+    post:
+      responses:
+        '202':
+          description: Run requested
+  /tasks/{taskId}/feedback:
+    get:
+      responses:
+        '200':
+          description: Feedback events
+  /tasks/{taskId}/observability:
+    get:
+      responses:
+        '200':
+          description: Metrics and audit summary
+  /evaluation/summary:
+    get:
+      responses:
+        '200':
+          description: Evaluation summary

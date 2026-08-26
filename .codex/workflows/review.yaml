@@ -1,0 +1,9 @@
+name: review
+steps:
+  - inspect_diff
+  - inspect_graph_impact
+  - validate_architecture
+  - validate_tests
+  - validate_complexity
+  - validate_context_freshness
+  - report_findings

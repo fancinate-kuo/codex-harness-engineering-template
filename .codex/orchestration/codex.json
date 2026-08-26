@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "adapter": "app-server",
+  "binary": "codex",
+  "appServerArgs": [
+    "app-server"
+  ],
+  "model": null,
+  "sandbox": "workspace-write",
+  "approvalPolicy": "on-request",
+  "turnTimeoutMs": 1800000,
+  "clientInfo": {
+    "name": "harness_orchestrator",
+    "title": "Codex Harness Orchestrator",
+    "version": "0.6.0"
+  },
+  "stagePrompt": {
+    "includeAgentInstructions": true,
+    "includeTaskState": true,
+    "includeRequiredArtifacts": true,
+    "includeExpectedOutputs": true
+  }
+}

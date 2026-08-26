@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Repository Memory Record",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "content",
+    "createdAt",
+    "source",
+    "confidence",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "decision",
+        "failure-pattern",
+        "fix-pattern",
+        "review-finding",
+        "graph-lesson",
+        "migration-caveat",
+        "operational-note",
+        "exception"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "featureId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "moduleId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "type",
+        "ref"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "adr",
+            "task",
+            "review",
+            "test",
+            "graph",
+            "incident",
+            "manual"
+          ]
+        },
+        "ref": {
+          "type": "string"
+        }
+      }
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "authoritative"
+      ]
+    },
+    "status": {
+      "enum": [
+        "active",
+        "superseded",
+        "expired",
+        "disputed"
+      ]
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "expiresAt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

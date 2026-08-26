@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "name": "parallel-feature-delivery",
+  "nodes": [
+    {
+      "id": "planner",
+      "agent": "planner",
+      "dependsOn": [],
+      "mutable": false,
+      "produces": [
+        "plan.json"
+      ]
+    },
+    {
+      "id": "impact",
+      "agent": "impact",
+      "dependsOn": [
+        "planner"
+      ],
+      "mutable": false,
+      "produces": [
+        "impact.json"
+      ]
+    },
+    {
+      "id": "backend",
+      "agent": "implementation",
+      "role": "backend",
+      "dependsOn": [
+        "impact"
+      ],
+      "mutable": true,
+      "produces": [
+        "backend-summary.json"
+      ],
+      "retryable": true
+    },
+    {
+      "id": "frontend",
+      "agent": "implementation",
+      "role": "frontend",
+      "dependsOn": [
+        "impact"
+      ],
+      "mutable": true,
+      "produces": [
+        "frontend-summary.json"
+      ],
+      "retryable": true
+    },
+    {
+      "id": "database",
+      "agent": "implementation",
+      "role": "database",
+      "dependsOn": [
+        "impact"
+      ],
+      "mutable": true,
+      "conditional": "database_change_required",
+      "produces": [
+        "database-summary.json"
+      ],
+      "retryable": true
+    },
+    {
+      "id": "integration",
+      "agent": "integration",
+      "dependsOn": [
+        "backend",
+        "frontend",
+        "database"
+      ],
+      "allowSkippedDependencies": true,
+      "mutable": true,
+      "produces": [
+        "integration-summary.json"
+      ],
+      "retryable": true
+    },
+    {
+      "id": "test",
+      "agent": "test",
+      "dependsOn": [
+        "integration"
+      ],
+      "mutable": false,
+      "produces": [
+        "test-report.json"
+      ],
+      "retryable": true
+    },
+    {
+      "id": "review",
+      "agent": "review",
+      "dependsOn": [
+        "integration"
+      ],
+      "mutable": false,
+      "produces": [
+        "review-report.json"
+      ]
+    },
+    {
+      "id": "pr",
+      "agent": "pr",
+      "dependsOn": [
+        "test",
+        "review"
+      ],
+      "mutable": false,
+      "produces": [
+        "pr-summary.json"
+      ]
+    }
+  ]
+}

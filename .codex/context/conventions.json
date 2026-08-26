@@ -1,0 +1,16 @@
+{
+  "principles": [
+    "YAGNI",
+    "KISS",
+    "Existing Project Convention"
+  ],
+  "commitPrefixes": [
+    "feat:",
+    "fix:",
+    "refactor:",
+    "test:",
+    "docs:",
+    "chore:"
+  ],
+  "completionGate": "pnpm harness:verify"
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Parallel DAG State",
+  "type": "object",
+  "required": [
+    "taskId",
+    "nodes"
+  ],
+  "properties": {
+    "taskId": {
+      "type": "string"
+    },
+    "nodes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "status",
+          "retryCount"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "pending",
+              "ready",
+              "running",
+              "passed",
+              "failed",
+              "blocked",
+              "skipped"
+            ]
+          },
+          "retryCount": {
+            "type": "integer"
+          },
+          "worktree": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "threadId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "startedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "finishedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

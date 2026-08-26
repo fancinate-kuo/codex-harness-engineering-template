@@ -1,0 +1,17 @@
+{
+  "query": "feature-impact",
+  "input": {
+    "featureId": "forum.reply.edit"
+  },
+  "returns": [
+    "requirement",
+    "capability",
+    "module",
+    "apis",
+    "tables",
+    "tests",
+    "adrs",
+    "owners",
+    "risk"
+  ]
+}

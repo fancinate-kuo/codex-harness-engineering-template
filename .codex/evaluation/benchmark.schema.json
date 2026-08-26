@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harness Benchmark Task",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "category",
+    "input",
+    "expectations"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "category": {
+      "enum": [
+        "feature",
+        "bugfix",
+        "refactor",
+        "security",
+        "docs",
+        "migration"
+      ]
+    },
+    "input": {
+      "type": "object"
+    },
+    "expectations": {
+      "type": "object",
+      "properties": {
+        "requiredNodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbiddenNodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredTests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "maxRetries": {
+          "type": "integer"
+        },
+        "maxReplans": {
+          "type": "integer"
+        },
+        "mustPassHarnessVerify": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

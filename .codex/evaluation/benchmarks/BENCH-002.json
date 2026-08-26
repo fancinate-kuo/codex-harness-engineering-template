@@ -1,0 +1,36 @@
+{
+  "id": "BENCH-002",
+  "title": "UI behavior change requires Playwright",
+  "category": "feature",
+  "input": {
+    "requirement": "Add pin button state to forum post UI",
+    "signals": {
+      "backendChange": false,
+      "frontendChange": true,
+      "databaseChange": false,
+      "uiBehaviorChange": true,
+      "securitySensitive": false,
+      "docsOnly": false,
+      "risk": "medium"
+    }
+  },
+  "expectations": {
+    "requiredNodes": [
+      "planner",
+      "impact",
+      "frontend",
+      "playwright",
+      "review",
+      "pr"
+    ],
+    "forbiddenNodes": [
+      "migration"
+    ],
+    "requiredTests": [
+      "playwright"
+    ],
+    "maxRetries": 1,
+    "maxReplans": 1,
+    "mustPassHarnessVerify": true
+  }
+}

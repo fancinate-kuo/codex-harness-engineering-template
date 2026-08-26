@@ -1,0 +1,19 @@
+{
+  "features": [
+    {
+      "id": "forum.reply.edit",
+      "module": "forum",
+      "apis": [
+        "PATCH /replies/:id"
+      ],
+      "tables": [
+        "forum_replies"
+      ],
+      "tests": [
+        "tests/integration/forum",
+        "tests/e2e/forum"
+      ],
+      "adrs": []
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Forum Playwright tests
+

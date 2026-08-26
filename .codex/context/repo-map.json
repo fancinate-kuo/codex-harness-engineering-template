@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "modules": {
+    "forum": {
+      "backend": "apps/api/src/modules/forum",
+      "frontend": "apps/web/src/features/forum",
+      "domain": "packages/domain/src/forum",
+      "contracts": "packages/contracts/src/forum",
+      "tests": [
+        "tests/integration/forum",
+        "tests/e2e/forum"
+      ]
+    }
+  }
+}

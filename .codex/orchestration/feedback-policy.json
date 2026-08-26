@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "classifications": {
+    "transient": {
+      "action": "retry",
+      "maxRetries": 2
+    },
+    "test-regression": {
+      "action": "replan",
+      "addNodes": [
+        "fix"
+      ]
+    },
+    "ui-regression": {
+      "action": "replan",
+      "addNodes": [
+        "fix",
+        "playwright"
+      ]
+    },
+    "architecture-violation": {
+      "action": "replan",
+      "addNodes": [
+        "fix",
+        "review"
+      ]
+    },
+    "unexpected-impact": {
+      "action": "replan",
+      "addNodes": [
+        "impact-refresh",
+        "fix"
+      ]
+    },
+    "security-finding": {
+      "action": "replan",
+      "addNodes": [
+        "security-fix",
+        "security-review"
+      ]
+    },
+    "migration-failure": {
+      "action": "replan",
+      "addNodes": [
+        "migration-fix",
+        "test"
+      ]
+    },
+    "unknown": {
+      "action": "block"
+    }
+  }
+}

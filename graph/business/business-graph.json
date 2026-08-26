@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "requirements": [
+    {
+      "id": "REQ-FORUM-001",
+      "title": "Authors can edit their own replies",
+      "features": [
+        "forum.reply.edit"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "forum.reply.edit",
+      "title": "Edit forum reply",
+      "capability": "forum.reply-management",
+      "module": "forum",
+      "apis": [
+        "PATCH /replies/:id"
+      ],
+      "tables": [
+        "forum_replies"
+      ],
+      "tests": [
+        "tests/integration/forum/reply-edit",
+        "tests/e2e/forum/reply-edit"
+      ],
+      "adrs": [],
+      "owners": [
+        "forum-team"
+      ],
+      "risk": "medium"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "forum.reply-management",
+      "title": "Forum reply management",
+      "modules": [
+        "forum"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "id": "forum",
+      "backend": "apps/api/src/modules/forum",
+      "frontend": "apps/web/src/features/forum",
+      "domain": "packages/domain/src/forum",
+      "contracts": "packages/contracts/src/forum"
+    }
+  ],
+  "apis": [
+    {
+      "id": "PATCH /replies/:id",
+      "feature": "forum.reply.edit"
+    }
+  ],
+  "tables": [
+    {
+      "id": "forum_replies",
+      "ownerModule": "forum"
+    }
+  ],
+  "tests": [
+    {
+      "id": "tests/integration/forum/reply-edit",
+      "verifies": [
+        "forum.reply.edit"
+      ]
+    },
+    {
+      "id": "tests/e2e/forum/reply-edit",
+      "verifies": [
+        "forum.reply.edit"
+      ]
+    }
+  ],
+  "adrs": []
+}

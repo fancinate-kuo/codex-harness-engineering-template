@@ -1,0 +1,40 @@
+{
+  "default": "gitnexus",
+  "providers": {
+    "gitnexus": {
+      "enabled": true,
+      "role": "primary-agent-graph",
+      "capabilities": [
+        "structure",
+        "symbols",
+        "imports",
+        "calls",
+        "processes",
+        "impact",
+        "change-impact",
+        "cypher"
+      ]
+    },
+    "scip": {
+      "enabled": false,
+      "role": "semantic-index",
+      "capabilities": [
+        "definitions",
+        "references",
+        "implementations",
+        "symbol-identity"
+      ]
+    },
+    "joern": {
+      "enabled": false,
+      "role": "deep-cpg",
+      "capabilities": [
+        "ast",
+        "cfg",
+        "data-flow",
+        "taint",
+        "security-analysis"
+      ]
+    }
+  }
+}

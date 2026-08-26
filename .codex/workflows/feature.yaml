@@ -1,0 +1,16 @@
+name: feature-development
+steps:
+  - read_agents
+  - locate_module
+  - load_repo_map
+  - graph_impact_analysis
+  - implementation_plan
+  - checkpoint
+  - implement
+  - unit_test
+  - integration_test
+  - e2e_if_ui
+  - architecture_validation
+  - graph_refresh_if_needed
+  - harness_verify
+  - structured_handoff

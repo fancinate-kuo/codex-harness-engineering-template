@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "benchmarks": [
+    ".codex/evaluation/benchmarks/BENCH-001.json",
+    ".codex/evaluation/benchmarks/BENCH-002.json",
+    ".codex/evaluation/benchmarks/BENCH-003.json"
+  ]
+}

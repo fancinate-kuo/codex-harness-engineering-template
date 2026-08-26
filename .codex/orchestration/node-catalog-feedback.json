@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "nodes": {
+    "fix": {
+      "agent": "fix",
+      "mutable": true,
+      "produces": [
+        "fix-report.json"
+      ],
+      "retryable": true
+    },
+    "impact-refresh": {
+      "agent": "impact",
+      "mutable": false,
+      "produces": [
+        "impact-refresh.json"
+      ]
+    },
+    "security-fix": {
+      "agent": "fix",
+      "role": "security",
+      "mutable": true,
+      "produces": [
+        "security-fix-report.json"
+      ],
+      "retryable": true
+    },
+    "migration-fix": {
+      "agent": "fix",
+      "role": "migration",
+      "mutable": true,
+      "produces": [
+        "migration-fix-report.json"
+      ],
+      "retryable": true
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harness Orchestration Run",
+  "type": "object",
+  "required": [
+    "taskId",
+    "state",
+    "currentAgent",
+    "history"
+  ],
+  "properties": {
+    "taskId": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "currentAgent": {
+      "type": "string"
+    },
+    "worktree": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "retryCount": {
+      "type": "integer"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "at",
+          "agent",
+          "action"
+        ],
+        "properties": {
+          "at": {
+            "type": "string"
+          },
+          "agent": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

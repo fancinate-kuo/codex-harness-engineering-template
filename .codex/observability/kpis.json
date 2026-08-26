@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "kpis": [
+    "task_lead_time_ms",
+    "node_execution_time_ms",
+    "retry_count",
+    "replan_count",
+    "blocked_count",
+    "dag_node_count",
+    "parallelism_peak",
+    "test_failure_count",
+    "review_failure_count",
+    "graph_unexpected_impact_count",
+    "pr_gate_failure_count",
+    "self_correction_count"
+  ]
+}

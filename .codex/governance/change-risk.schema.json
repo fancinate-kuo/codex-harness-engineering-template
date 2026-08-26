@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harness Change Risk",
+  "type": "object",
+  "required": [
+    "taskId",
+    "risk"
+  ],
+  "properties": {
+    "taskId": {
+      "type": "string"
+    },
+    "risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "signals": {
+      "type": "object",
+      "properties": {
+        "destructiveDatabaseChange": {
+          "type": "boolean"
+        },
+        "authBoundaryChange": {
+          "type": "boolean"
+        },
+        "permissionModelChange": {
+          "type": "boolean"
+        },
+        "productionDeployment": {
+          "type": "boolean"
+        },
+        "secretOrCredentialChange": {
+          "type": "boolean"
+        },
+        "publicContractBreakingChange": {
+          "type": "boolean"
+        },
+        "protectedPathChange": {
+          "type": "boolean"
+        }
+      }
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

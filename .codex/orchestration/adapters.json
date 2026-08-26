@@ -1,0 +1,13 @@
+{
+  "default": "file-request",
+  "adapters": {
+    "file-request": {
+      "description": "Writes stage invocation requests for an external Codex/agent process",
+      "requestDir": ".codex/orchestration/requests"
+    },
+    "shell": {
+      "description": "Executes a configured local shell command",
+      "enabled": false
+    }
+  }
+}

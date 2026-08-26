@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "provider": "postgresql",
+  "connectionEnv": "HARNESS_DATABASE_URL",
+  "fallback": "filesystem",
+  "eventStore": true,
+  "projectionMode": "write-through",
+  "schema": "harness"
+}

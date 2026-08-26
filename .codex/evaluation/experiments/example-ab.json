@@ -1,0 +1,26 @@
+{
+  "id": "EXP-001",
+  "variants": [
+    {
+      "name": "baseline",
+      "config": {
+        "model": "default",
+        "memoryEnabled": false,
+        "dynamicDag": true
+      }
+    },
+    {
+      "name": "memory-on",
+      "config": {
+        "model": "default",
+        "memoryEnabled": true,
+        "dynamicDag": true
+      }
+    }
+  ],
+  "benchmarks": [
+    "BENCH-001",
+    "BENCH-002",
+    "BENCH-003"
+  ]
+}

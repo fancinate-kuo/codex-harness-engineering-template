@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harness Feedback Event",
+  "type": "object",
+  "required": [
+    "taskId",
+    "source",
+    "status"
+  ],
+  "properties": {
+    "taskId": {
+      "type": "string"
+    },
+    "source": {
+      "enum": [
+        "unit",
+        "integration",
+        "playwright",
+        "ci",
+        "architecture",
+        "graph",
+        "review",
+        "security",
+        "migration"
+      ]
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "failed",
+        "warning"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array"
+    },
+    "classification": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdAt": {
+      "type": "string"
+    }
+  }
+}

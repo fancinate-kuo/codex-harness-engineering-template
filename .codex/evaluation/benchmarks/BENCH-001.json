@@ -1,0 +1,39 @@
+{
+  "id": "BENCH-001",
+  "title": "Backend-only forum validation change",
+  "category": "feature",
+  "input": {
+    "requirement": "Reject empty forum replies",
+    "signals": {
+      "backendChange": true,
+      "frontendChange": false,
+      "databaseChange": false,
+      "uiBehaviorChange": false,
+      "securitySensitive": false,
+      "docsOnly": false,
+      "risk": "low"
+    }
+  },
+  "expectations": {
+    "requiredNodes": [
+      "planner",
+      "impact",
+      "backend",
+      "test",
+      "review",
+      "pr"
+    ],
+    "forbiddenNodes": [
+      "frontend",
+      "migration",
+      "playwright"
+    ],
+    "requiredTests": [
+      "unit",
+      "integration"
+    ],
+    "maxRetries": 1,
+    "maxReplans": 0,
+    "mustPassHarnessVerify": true
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "nodes": {
+    "planner": {
+      "agent": "planner",
+      "mutable": false,
+      "produces": [
+        "plan.json"
+      ]
+    },
+    "impact": {
+      "agent": "impact",
+      "mutable": false,
+      "produces": [
+        "impact.json"
+      ]
+    },
+    "backend": {
+      "agent": "implementation",
+      "role": "backend",
+      "mutable": true,
+      "produces": [
+        "backend-summary.json"
+      ],
+      "retryable": true
+    },
+    "frontend": {
+      "agent": "implementation",
+      "role": "frontend",
+      "mutable": true,
+      "produces": [
+        "frontend-summary.json"
+      ],
+      "retryable": true
+    },
+    "migration": {
+      "agent": "implementation",
+      "role": "database",
+      "mutable": true,
+      "produces": [
+        "migration-summary.json"
+      ],
+      "retryable": true
+    },
+    "docs": {
+      "agent": "implementation",
+      "role": "docs",
+      "mutable": true,
+      "produces": [
+        "docs-summary.json"
+      ]
+    },
+    "integration": {
+      "agent": "integration",
+      "mutable": true,
+      "produces": [
+        "integration-summary.json"
+      ],
+      "retryable": true
+    },
+    "test": {
+      "agent": "test",
+      "mutable": false,
+      "produces": [
+        "test-report.json"
+      ],
+      "retryable": true
+    },
+    "playwright": {
+      "agent": "test",
+      "role": "playwright",
+      "mutable": false,
+      "produces": [
+        "playwright-report.json"
+      ],
+      "retryable": true
+    },
+    "security-review": {
+      "agent": "review",
+      "role": "security",
+      "mutable": false,
+      "produces": [
+        "security-review.json"
+      ]
+    },
+    "review": {
+      "agent": "review",
+      "mutable": false,
+      "produces": [
+        "review-report.json"
+      ]
+    },
+    "pr": {
+      "agent": "pr",
+      "mutable": false,
+      "produces": [
+        "pr-summary.json"
+      ]
+    }
+  }
+}

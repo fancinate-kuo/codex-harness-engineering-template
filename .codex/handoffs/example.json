@@ -1,0 +1,20 @@
+{
+  "task": "forum-edit-reply",
+  "goal": "Allow authors to edit replies",
+  "completed": [
+    "PATCH /replies/:id",
+    "EditReplyDialog.vue",
+    "integration tests"
+  ],
+  "changedFiles": [],
+  "decisions": [],
+  "remaining": [
+    "Playwright test"
+  ],
+  "risks": [],
+  "verification": {
+    "unit": "passed",
+    "integration": "passed",
+    "e2e": "pending"
+  }
+}

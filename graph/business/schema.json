@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harness Business Graph",
+  "type": "object",
+  "required": [
+    "version",
+    "requirements",
+    "features",
+    "capabilities",
+    "modules"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer"
+    },
+    "requirements": {
+      "type": "array"
+    },
+    "features": {
+      "type": "array"
+    },
+    "capabilities": {
+      "type": "array"
+    },
+    "modules": {
+      "type": "array"
+    },
+    "apis": {
+      "type": "array"
+    },
+    "tables": {
+      "type": "array"
+    },
+    "tests": {
+      "type": "array"
+    },
+    "adrs": {
+      "type": "array"
+    }
+  }
+}

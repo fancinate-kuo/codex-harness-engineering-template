@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "agents": {
+    "planner": {
+      "read": [
+        "**"
+      ],
+      "write": [
+        ".codex/orchestration/shared/**"
+      ]
+    },
+    "impact": {
+      "read": [
+        "**"
+      ],
+      "write": [
+        ".codex/orchestration/shared/**"
+      ]
+    },
+    "implementation": {
+      "read": [
+        "**"
+      ],
+      "write": [
+        "apps/**",
+        "packages/**",
+        "tests/**",
+        ".codex/orchestration/shared/**"
+      ]
+    },
+    "test": {
+      "read": [
+        "**"
+      ],
+      "write": [
+        "tests/**",
+        ".codex/orchestration/shared/**"
+      ]
+    },
+    "review": {
+      "read": [
+        "**"
+      ],
+      "write": [
+        ".codex/orchestration/shared/**"
+      ]
+    },
+    "fix": {
+      "read": [
+        "**"
+      ],
+      "write": [
+        "apps/**",
+        "packages/**",
+        "tests/**",
+        ".codex/orchestration/shared/**"
+      ]
+    },
+    "pr": {
+      "read": [
+        "**"
+      ],
+      "write": [
+        ".codex/orchestration/shared/**"
+      ]
+    }
+  }
+}
