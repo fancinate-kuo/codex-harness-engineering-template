@@ -10,6 +10,15 @@
         "tests/integration/forum",
         "tests/e2e/forum"
       ]
+    },
+    "reference": {
+      "application": "packages/reference/src/application",
+      "domain": "packages/reference/src/domain",
+      "contracts": "packages/reference/src/contracts",
+      "infrastructure": "packages/reference/src/infrastructure",
+      "tests": [
+        "tests/unit/reference-module.test.ts"
+      ]
     }
   }
 }
