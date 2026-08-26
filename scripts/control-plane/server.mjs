@@ -1,11 +1,13 @@
 import http from "node:http";
 import fs from "node:fs";
 import { spawn } from "node:child_process";
-import { overview, taskList, taskDetail, readJson } from "./lib/read-model.mjs";
+import { readJson } from "./lib/read-model.mjs";
+import { createRuntimeReadModel } from "./lib/runtime-read-model.mjs";
 
 const cfg=readJson(".codex/control-plane/config.json",{api:{host:"127.0.0.1",port:4317}});
 const host=cfg.api?.host ?? "127.0.0.1";
 const port=cfg.api?.port ?? 4317;
+const runtimeReadModel=createRuntimeReadModel();
 
 const sseClients=new Set();
 
@@ -48,10 +50,10 @@ function runDetached(cmd,args,taskId){
 }
 
 setInterval(()=>{
-  emit("snapshot",{
-    overview:overview(),
+  runtimeReadModel.overview().then(currentOverview => emit("snapshot",{
+    overview:currentOverview,
     at:new Date().toISOString()
-  });
+  })).catch(error => emit("error",{message:error.message}));
 },5000).unref();
 
 const server=http.createServer(async (req,res)=>{
@@ -74,23 +76,23 @@ const server=http.createServer(async (req,res)=>{
   }
 
   if(req.method==="GET" && url.pathname==="/health"){
-    send(res,200,{ok:true,version:"0.16.0",sseClients:sseClients.size});
+    send(res,200,{ok:true,version:"0.16.0",runtimeStore:runtimeReadModel.mode,sseClients:sseClients.size});
     return;
   }
 
   if(req.method==="GET" && url.pathname==="/overview"){
-    send(res,200,overview());
+    send(res,200,await runtimeReadModel.overview());
     return;
   }
 
   if(req.method==="GET" && url.pathname==="/tasks"){
-    send(res,200,{tasks:taskList()});
+    send(res,200,{tasks:await runtimeReadModel.taskList()});
     return;
   }
 
   if(parts[0]==="tasks" && parts[1]){
     const taskId=parts[1];
-    const detail=taskDetail(taskId);
+    const detail=await runtimeReadModel.taskDetail(taskId);
 
     if(!detail.task){
       send(res,404,{error:"task_not_found",taskId});
@@ -128,9 +130,9 @@ const server=http.createServer(async (req,res)=>{
 
       let output="";
       child.stdout.on("data",c=>output+=c);
-      child.on("close",code=>{
+      child.on("close",async code=>{
         if(code===0){
-          const next=taskDetail(taskId).approval;
+          const next=(await runtimeReadModel.taskDetail(taskId)).approval;
           emit("approval",{taskId,decision:next?.decision,at:new Date().toISOString()});
           send(res,200,next);
         }else{
@@ -141,7 +143,7 @@ const server=http.createServer(async (req,res)=>{
     }
 
     if(req.method==="POST" && parts[2]==="run"){
-      runDetached("pnpm",["harness:dag:run",taskId],taskId);
+      runDetached(process.execPath,["scripts/control-plane/runtime-run.mjs",taskId],taskId);
       send(res,202,{accepted:true,taskId});
       return;
     }
@@ -174,7 +176,7 @@ const server=http.createServer(async (req,res)=>{
   }
 
   if(req.method==="GET" && url.pathname==="/evaluation/summary"){
-    send(res,200,readJson(".codex/evaluation/results/summary.json",{count:0,passRate:0}));
+    send(res,200,await runtimeReadModel.evaluationSummary());
     return;
   }
 

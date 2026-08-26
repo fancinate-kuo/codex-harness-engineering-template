@@ -487,11 +487,13 @@ Set the database connection:
 
 ```bash
 export HARNESS_DATABASE_URL=postgres://postgres:postgres@localhost:5432/harness
+export HARNESS_RUNTIME_STORE=postgres
 ```
 
 Initialize:
 
 ```bash
+pnpm harness:runtime:check
 pnpm db:check
 pnpm db:migrate
 pnpm db:seed
@@ -509,4 +511,6 @@ Read append-only events:
 pnpm harness:events TASK-001
 ```
 
-Runtime state can now be moved from local JSON files into PostgreSQL while repository configuration remains versioned in Git.
+The Control Plane selects the PostgreSQL runtime adapter when configured;
+without a database URL it stays in the filesystem fallback. Repository
+configuration remains versioned in Git in either mode.

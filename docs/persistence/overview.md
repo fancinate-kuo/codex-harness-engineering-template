@@ -31,3 +31,19 @@ Portable repository configuration:
 
 Git remains the source of truth for repository configuration.
 PostgreSQL becomes the source of truth for runtime operational state.
+
+## Runtime store selection
+
+The Control Plane uses one `RuntimeReadModel` interface and selects its
+adapter with `HARNESS_RUNTIME_STORE`:
+
+```text
+HARNESS_RUNTIME_STORE=filesystem  # local/offline fallback
+HARNESS_RUNTIME_STORE=postgres    # production; requires HARNESS_DATABASE_URL
+```
+
+When the variable is omitted, a configured `HARNESS_DATABASE_URL` selects the
+PostgreSQL adapter; otherwise filesystem mode is selected. Invalid or partial
+PostgreSQL configuration fails during startup instead of silently falling back.
+
+Run `pnpm harness:runtime:check` to inspect the selected mode.

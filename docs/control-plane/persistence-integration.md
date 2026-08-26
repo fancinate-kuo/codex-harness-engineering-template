@@ -2,10 +2,16 @@
 
 v17 introduces database repositories but keeps filesystem read-model compatibility.
 
-Recommended production transition:
+Runtime store transition:
 
-1. write-through to PostgreSQL
-2. verify parity with filesystem state
-3. switch Control Plane reads to PostgreSQL
-4. keep filesystem only for portable config / bootstrap
-5. move event streaming to database-backed events
+1. set `HARNESS_RUNTIME_STORE=postgres` with `HARNESS_DATABASE_URL`
+2. run `pnpm db:migrate` and `pnpm db:seed`
+3. persist an initial snapshot with `pnpm harness:persist:snapshot TASK-001`
+4. Control Plane reads use the PostgreSQL adapter while repository configuration
+   remains in Git
+5. keep filesystem mode for local/offline fallback and parity checks
+
+The Control Plane does not access PostgreSQL directly. It uses the
+`RuntimeReadModel` seam, which selects either the filesystem adapter or the
+PostgreSQL adapter at startup. Task leases and idempotency keys are stored in
+PostgreSQL so multiple schedulers can coordinate without sharing local files.

@@ -1,4 +1,6 @@
 import fs from "node:fs";
+import { resolveRuntimeStoreMode } from "../persistence/lib/runtime-store.mjs";
+import { decidePostgresApproval } from "../persistence/lib/approval.mjs";
 
 const taskId=process.argv[2];
 const decision=process.argv[3];
@@ -10,17 +12,27 @@ if(!taskId || !["approved","rejected"].includes(decision)){
   process.exit(0);
 }
 
-const file=`.codex/orchestration/shared/${taskId}/approval.json`;
-if(!fs.existsSync(file)){
-  console.error(`Missing approval request: ${file}`);
-  process.exit(2);
+async function main() {
+  if (resolveRuntimeStoreMode() === "postgres") {
+    const result = await decidePostgresApproval(taskId, decision, decidedBy, reason);
+    console.log(JSON.stringify(result, null, 2));
+    return;
+  }
+
+  const file=`.codex/orchestration/shared/${taskId}/approval.json`;
+  if(!fs.existsSync(file)) throw new Error(`Missing approval request: ${file}`);
+
+  const a=JSON.parse(fs.readFileSync(file,"utf8"));
+  a.decision=decision;
+  a.decidedAt=new Date().toISOString();
+  a.decidedBy=decidedBy;
+  a.reason=reason || a.reason;
+
+  fs.writeFileSync(file,JSON.stringify(a,null,2)+"\n");
+  console.log(JSON.stringify(a,null,2));
 }
 
-const a=JSON.parse(fs.readFileSync(file,"utf8"));
-a.decision=decision;
-a.decidedAt=new Date().toISOString();
-a.decidedBy=decidedBy;
-a.reason=reason || a.reason;
-
-fs.writeFileSync(file,JSON.stringify(a,null,2)+"\n");
-console.log(JSON.stringify(a,null,2));
+main().catch(error => {
+  console.error(error.stack || error.message);
+  process.exitCode = 1;
+});
