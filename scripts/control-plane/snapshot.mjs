@@ -1,12 +1,14 @@
 import fs from "node:fs";
-import { overview, taskList, taskDetail } from "./lib/read-model.mjs";
+import { createRuntimeReadModel } from "./lib/runtime-read-model.mjs";
 
-const tasks=taskList();
+const runtimeReadModel = createRuntimeReadModel();
+const tasks = await runtimeReadModel.taskList();
 const snapshot={
   generatedAt:new Date().toISOString(),
-  version:"0.14.0",
-  overview:overview(),
-  tasks:tasks.map(t=>taskDetail(t.id))
+  version:"0.17.0",
+  runtimeStore: runtimeReadModel.mode,
+  overview: await runtimeReadModel.overview(),
+  tasks: await Promise.all(tasks.map(t => runtimeReadModel.taskDetail(t.id)))
 };
 
 const dir=".codex/control-plane/snapshots";

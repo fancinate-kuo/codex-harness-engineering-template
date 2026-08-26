@@ -5,6 +5,7 @@ describe('harness verification contract', () => {
   it('includes every required delivery gate', () => {
     expect(REQUIRED_GATES.map(([name]) => name)).toEqual([
       'graph-doctor',
+      'runtime-store',
       'orchestration-validate',
       'orchestration-smoke',
       'lint',

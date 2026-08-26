@@ -20,6 +20,7 @@
     "graph:prepare": "node scripts/graph/prepare.mjs",
     "graph:status": "node scripts/graph/status.mjs",
     "graph:doctor": "node scripts/graph/doctor.mjs",
+    "harness:runtime:check": "node scripts/persistence/runtime-check.mjs",
     "graph:setup": "node scripts/graph/gitnexus.mjs setup",
     "graph:list": "node scripts/graph/gitnexus.mjs list",
     "graph:route": "node scripts/graph/route-query.mjs",

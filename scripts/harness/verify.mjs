@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 export const REQUIRED_GATES = Object.freeze([
   ['graph-doctor', ['run', 'graph:doctor']],
+  ['runtime-store', ['run', 'harness:runtime:check']],
   ['orchestration-validate', ['run', 'harness:orchestration:validate']],
   ['orchestration-smoke', ['run', 'harness:orchestration:smoke']],
   ['lint', ['run', 'lint']],

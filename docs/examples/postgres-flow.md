@@ -2,7 +2,9 @@
 
 ```bash
 export HARNESS_DATABASE_URL=postgres://postgres:postgres@localhost:5432/harness
+export HARNESS_RUNTIME_STORE=postgres
 
+pnpm harness:runtime:check
 pnpm db:check
 pnpm db:migrate
 pnpm db:seed

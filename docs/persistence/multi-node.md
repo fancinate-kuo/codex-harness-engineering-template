@@ -8,9 +8,7 @@ PostgreSQL enables:
 - shared audit history
 - long-running task recovery
 
-Production additions still needed:
-- advisory/distributed locking
-- queue leasing
-- idempotency keys
-- leader election or worker coordination
-- connection pooling / PgBouncer
+The runtime coordination migration provides task leases and idempotency keys;
+the scheduler can use these as the shared coordination seam. A deployment
+should still add leader election when it runs more than one scheduler and
+size the pool appropriately (PgBouncer may be useful at larger scale).

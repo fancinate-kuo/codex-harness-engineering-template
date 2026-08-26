@@ -2,6 +2,8 @@
   "version": 1,
   "provider": "postgresql",
   "connectionEnv": "HARNESS_DATABASE_URL",
+  "runtimeStoreEnv": "HARNESS_RUNTIME_STORE",
+  "runtimeStoreDefault": "filesystem_without_database_url",
   "fallback": "filesystem",
   "eventStore": true,
   "projectionMode": "write-through",

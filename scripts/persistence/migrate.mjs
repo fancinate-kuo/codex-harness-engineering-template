@@ -1,15 +1,34 @@
 import fs from "node:fs";
 import path from "node:path";
-import { query, closePool } from "./lib/db.mjs";
+import { query, transaction, closePool } from "./lib/db.mjs";
 
 const dir="db/migrations";
 const files=fs.readdirSync(dir).filter(f=>f.endsWith(".sql")).sort();
 
 try {
+  await query("CREATE SCHEMA IF NOT EXISTS harness");
+  await query(`CREATE TABLE IF NOT EXISTS harness.schema_migrations (
+    version TEXT PRIMARY KEY,
+    applied_at TIMESTAMPTZ NOT NULL DEFAULT now()
+  )`);
+
   for(const file of files) {
-    console.log(`Applying ${file}`);
     const sql=fs.readFileSync(path.join(dir,file),"utf8");
-    await query(sql);
+    const applied = await transaction(async client => {
+      await client.query("SELECT pg_advisory_xact_lock(hashtext('harness:migrations'))");
+      const existing = await client.query(
+        "SELECT 1 FROM harness.schema_migrations WHERE version=$1",
+        [file]
+      );
+      if (existing.rowCount) return false;
+      await client.query(sql);
+      await client.query(
+        "INSERT INTO harness.schema_migrations(version) VALUES ($1)",
+        [file]
+      );
+      return true;
+    });
+    console.log(`${applied ? "Applied" : "Skipped"} ${file}`);
   }
   console.log("Migrations complete.");
 } catch(err) {

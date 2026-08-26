@@ -1,0 +1,16 @@
+{
+  "task": "P3-runtime-postgres",
+  "status": "in_progress",
+  "createdAt": "2026-08-26T10:40:26.359Z",
+  "affectedModules": ["persistence", "control-plane", "runtime"],
+  "completed": [
+    "RuntimeReadModel filesystem/PostgreSQL adapter seam",
+    "PostgreSQL migration tracking, task leases, and idempotency keys",
+    "Database-backed Control Plane read model and approval write path",
+    "Runtime and persistence contract tests"
+  ],
+  "next": [
+    "run post-commit harness verification",
+    "open P3 pull request and enable auto-merge"
+  ]
+}
