@@ -17,6 +17,7 @@
     "harness:handoff": "node scripts/harness/handoff.mjs",
     "harness:verify": "node scripts/harness/verify.mjs",
     "graph:analyze": "node scripts/graph/analyze.mjs",
+    "graph:prepare": "node scripts/graph/prepare.mjs",
     "graph:status": "node scripts/graph/status.mjs",
     "graph:doctor": "node scripts/graph/doctor.mjs",
     "graph:setup": "node scripts/graph/gitnexus.mjs setup",
