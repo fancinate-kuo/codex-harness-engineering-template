@@ -1,0 +1,24 @@
+{
+  "task": "P4-control-plane-hardening",
+  "status": "in_progress",
+  "createdAt": "2026-08-26T10:58:11.845Z",
+  "affectedModules": [
+    "control-plane",
+    "control-plane-security",
+    "repository-hygiene"
+  ],
+  "completed": [
+    "Add loopback and bearer-token security policy",
+    "Restrict CORS, request bodies, task identifiers, and mutation routes",
+    "Add mutation audit records without credentials",
+    "Harden child-process launchers and Windows E2E server startup",
+    "Add unit and integration security coverage",
+    "Document Control Plane deployment security requirements"
+  ],
+  "next": [
+    "Run architecture, build, graph, and harness verification",
+    "Commit and push P4 branch",
+    "Create PR, enable auto-merge, and confirm protected checks",
+    "Verify merged main and perform final P2-P4 audit"
+  ]
+}

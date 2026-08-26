@@ -406,6 +406,10 @@ Start the local API:
 pnpm harness:control:serve
 ```
 
+For a non-loopback deployment, set `HARNESS_CONTROL_PLANE_TOKEN` and an
+explicit `HARNESS_CONTROL_PLANE_ORIGINS`; the server refuses to start without
+the token. Local loopback development remains tokenless by default.
+
 Generate a read-model snapshot:
 
 ```bash

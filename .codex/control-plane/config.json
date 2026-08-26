@@ -4,6 +4,13 @@
     "host": "127.0.0.1",
     "port": 4317
   },
+  "security": {
+    "allowedOrigins": [
+      "http://127.0.0.1:4318",
+      "http://localhost:4318"
+    ],
+    "maxBodyBytes": 65536
+  },
   "ui": {
     "enabled": true
   },

@@ -49,9 +49,10 @@ api.on('exit', code => {
 try {
   await waitForHealth('http://127.0.0.1:4317/health')
   const web = start(
-    'pnpm',
-    ['--dir', 'apps/control-plane', 'dev'],
-    { shell: process.platform === 'win32' }
+    process.platform === 'win32' ? (process.env.ComSpec || 'cmd.exe') : 'pnpm',
+    process.platform === 'win32'
+      ? ['/d', '/s', '/c', 'pnpm --dir apps/control-plane dev']
+      : ['--dir', 'apps/control-plane', 'dev']
   )
   web.on('exit', code => shutdown(code ?? 0))
 } catch (error) {
