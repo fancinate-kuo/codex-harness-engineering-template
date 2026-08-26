@@ -1,0 +1,15 @@
+{
+  "task": "P2-generic-reference-module",
+  "status": "in_progress",
+  "createdAt": "2026-08-26T10:25:40.461Z",
+  "affectedModules": ["reference", "architecture", "business-graph"],
+  "completed": [
+    "P1 main merge confirmed at 41925d3c",
+    "ReferenceService public seam and in-memory adapter implemented",
+    "Reference module unit tests, repo map, and business graph updated"
+  ],
+  "next": [
+    "run detect_changes and harness verification",
+    "open P2 pull request and enable auto-merge"
+  ]
+}

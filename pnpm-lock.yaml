@@ -77,6 +77,8 @@ importers:
         specifier: ^3.0.0
         version: 3.3.11(typescript@5.9.3)
 
+  packages/reference: {}
+
 packages:
 
   '@babel/helper-string-parser@7.29.7':

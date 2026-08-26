@@ -48,6 +48,13 @@
       "frontend": "apps/web/src/features/forum",
       "domain": "packages/domain/src/forum",
       "contracts": "packages/contracts/src/forum"
+    },
+    {
+      "id": "reference",
+      "application": "packages/reference/src/application",
+      "domain": "packages/reference/src/domain",
+      "contracts": "packages/reference/src/contracts",
+      "infrastructure": "packages/reference/src/infrastructure"
     }
   ],
   "apis": [
