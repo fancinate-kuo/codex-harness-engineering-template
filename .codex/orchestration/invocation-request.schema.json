@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harness Agent Invocation Request",
+  "type": "object",
+  "required": [
+    "version",
+    "requestId",
+    "attemptId",
+    "taskId",
+    "nodeId",
+    "stageId",
+    "agent",
+    "mutable",
+    "expectedArtifacts",
+    "instructions",
+    "sharedWorkspace"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "requestId": { "type": "string", "minLength": 1 },
+    "attemptId": { "type": "string", "minLength": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "nodeId": { "type": "string", "minLength": 1 },
+    "stageId": { "type": "string", "minLength": 1 },
+    "agent": { "type": "string", "minLength": 1 },
+    "role": { "type": "string" },
+    "mutable": { "type": "boolean" },
+    "worktree": { "type": ["string", "null"] },
+    "branch": { "type": ["string", "null"] },
+    "dependsOn": { "type": "array", "items": { "type": "string" } },
+    "allowSkippedDependencies": { "type": "boolean" },
+    "expectedArtifacts": { "type": "array", "items": { "type": "string" } },
+    "instructions": { "type": "string", "minLength": 1 },
+    "sharedWorkspace": { "type": "string", "minLength": 1 },
+    "workflow": { "type": ["string", "null"] },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

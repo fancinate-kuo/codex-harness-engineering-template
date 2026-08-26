@@ -46,6 +46,9 @@ jobs:
       - name: Analyze GitNexus graph
         run: pnpm graph:analyze
 
+      - name: Verify GitNexus provider health
+        run: pnpm graph:doctor
+
       - name: Install Playwright browser dependencies (Ubuntu)
         if: runner.os == 'Linux'
         run: pnpm exec playwright install --with-deps chromium

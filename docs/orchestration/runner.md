@@ -16,8 +16,8 @@ The runner:
 4. validates required artifacts/gates,
 5. creates a worktree when the stage is mutable,
 6. writes an agent invocation request,
-7. waits for stage output to exist,
-8. validates stage result,
+7. waits for the stage result artifact,
+8. validates request identity, result status, expected artifacts, evidence, and graph provenance,
 9. transitions state,
 10. retries retryable failures,
 11. resumes from persisted state after interruption.
@@ -29,7 +29,7 @@ This runner coordinates agent work; it does not assume a specific remote agent A
 The default adapter is `file-request`:
 - the runner writes an invocation JSON file,
 - an external Codex/agent process consumes it,
-- the agent writes the expected stage artifact,
-- the runner validates and proceeds.
+- the agent writes `<stage>.result.json` plus the expected artifacts,
+- the runner validates the result contract and proceeds.
 
 This keeps the Harness portable.

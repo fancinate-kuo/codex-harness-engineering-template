@@ -1,14 +1,29 @@
-import { spawnSync } from "node:child_process";
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import {
+  commandExitCode,
+  runGitNexus,
+  writeCommandResult
+} from './command.mjs'
 
-console.log("== GitNexus Analyze ==");
+export function buildAnalyzeArgs(args = []) {
+  const extraArgs = Array.isArray(args) ? [...args] : []
+  if (!extraArgs.includes('--index-only')) extraArgs.unshift('--index-only')
+  return ['analyze', ...extraArgs]
+}
 
-const result = spawnSync(
-  "npx",
-  ["-y", "gitnexus@latest", "analyze"],
-  {
-    stdio: "inherit",
-    shell: process.platform === "win32"
-  }
-);
+export function runGraphAnalyze(
+  args = [],
+  run = runGitNexus,
+  io = { stdout: process.stdout, stderr: process.stderr }
+) {
+  const result = run(buildAnalyzeArgs(args))
+  writeCommandResult(result, io)
+  return commandExitCode(result)
+}
 
-process.exit(result.status ?? 1);
+const currentFile = fileURLToPath(import.meta.url)
+if (process.argv[1] && resolve(process.argv[1]) === currentFile) {
+  console.log('== GitNexus Analyze (index-only) ==')
+  process.exit(runGraphAnalyze(process.argv.slice(2)))
+}

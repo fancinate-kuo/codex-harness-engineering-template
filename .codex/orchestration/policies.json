@@ -1,10 +1,7 @@
 {
   "version": 1,
   "maxAutomaticRetriesPerStage": 2,
-  "parallelism": {
-    "readOnlyAgents": 3,
-    "mutableAgents": 1
-  },
+  "poolSource": "agent-pool.json",
   "worktreeRequiredFor": [
     "implementation",
     "fix"

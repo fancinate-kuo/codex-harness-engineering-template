@@ -1,7 +1,15 @@
-import { spawnSync } from "node:child_process";
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { buildAnalyzeArgs } from './analyze.mjs'
+import {
+  commandExitCode,
+  runGitNexus,
+  writeCommandResult
+} from './command.mjs'
 
 const action = process.argv[2] || "status";
-const allowed = new Set(["status", "analyze", "setup", "list"]);
+const forwardedArgs = process.argv.slice(3)
+const allowed = new Set(["status", "analyze", "setup", "list", "doctor"]);
 
 if (!allowed.has(action)) {
   console.error(`Unsupported GitNexus action: ${action}`);
@@ -9,10 +17,13 @@ if (!allowed.has(action)) {
   process.exit(2);
 }
 
-const args = ["-y", "gitnexus@latest", action];
-const result = spawnSync("npx", args, {
-  stdio: "inherit",
-  shell: process.platform === "win32"
-});
+const args = action === 'analyze'
+  ? buildAnalyzeArgs(forwardedArgs)
+  : [action, ...forwardedArgs]
+const result = runGitNexus(args)
+writeCommandResult(result)
 
-process.exit(result.status ?? 1);
+const currentFile = fileURLToPath(import.meta.url)
+if (process.argv[1] && resolve(process.argv[1]) === currentFile) {
+  process.exit(commandExitCode(result))
+}

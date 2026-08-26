@@ -34,3 +34,12 @@ Key areas:
 - shared
 - locks
 - policies
+
+P1 limits come only from `agent-pool.json`: global 4, mutable 2, and read-only
+4. Mutable nodes use isolated worktrees. The file-request adapter is canonical
+for P1; live Codex App Server turns, approvals, streaming, and automatic merge
+remain deferred.
+
+Every invocation has a request/attempt identity. A passed stage result must
+match its node and request, list every expected artifact, and include
+verification evidence. Failed or blocked results require a failure summary.

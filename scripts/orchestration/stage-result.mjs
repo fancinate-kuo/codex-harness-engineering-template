@@ -1,28 +1,14 @@
-import fs from "node:fs";
-import { loadJson, saveJson, runFile, appendHistory } from "./lib/state.mjs";
+import { applyResultFile } from "./lib/legacy-scheduler.mjs";
 
-const taskId = process.argv[2];
-const stageId = process.argv[3];
-const result = process.argv[4] || "passed";
-
-if (!taskId || !stageId) {
-  console.log("Usage: pnpm harness:stage:result TASK-001 planner passed");
-  process.exit(0);
-}
-
-const file = runFile(taskId);
-const run = loadJson(file);
-
-if (!run) {
-  console.error(`Run not found: ${taskId}`);
+const [taskId, , resultFile] = process.argv.slice(2);
+if (!taskId || !resultFile) {
+  console.error("Usage: pnpm harness:stage:result TASK-001 NODE result.json");
   process.exit(2);
 }
 
-appendHistory(run, run.currentAgent || stageId, "stage-result", `${stageId}:${result}`);
-
-if (result === "failed") {
-  run.retryCount = (run.retryCount ?? 0) + 1;
+try {
+  process.exit(applyResultFile(taskId, resultFile));
+} catch (error) {
+  console.error(`Stage result rejected: ${error.message}`);
+  process.exit(1);
 }
-
-saveJson(file, run);
-console.log(`${taskId} ${stageId}: ${result}`);

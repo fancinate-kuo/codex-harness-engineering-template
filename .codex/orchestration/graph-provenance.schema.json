@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GitNexus Graph Provenance",
+  "type": "object",
+  "required": ["provider", "queryType", "target", "indexedCommit", "generatedAt", "risk", "blastRadius"],
+  "properties": {
+    "provider": { "const": "gitnexus" },
+    "queryType": { "enum": ["context", "impact", "detect_changes"] },
+    "target": { "type": "string", "minLength": 1 },
+    "indexedCommit": { "type": "string", "minLength": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "risk": { "enum": ["low", "medium", "high", "critical", "unknown"] },
+    "blastRadius": {
+      "type": "object",
+      "required": ["summary"],
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "impactedSymbols": { "type": "integer", "minimum": 0 },
+        "impactedModules": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

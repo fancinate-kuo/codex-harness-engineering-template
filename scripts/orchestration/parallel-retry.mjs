@@ -1,9 +1,14 @@
-import fs from "node:fs";
-const task=process.argv[2], nodeId=process.argv[3];
-if(!task||!nodeId){console.log("Usage: pnpm harness:parallel:retry TASK-001 backend");process.exit(0);}
-const policy=JSON.parse(fs.readFileSync(".codex/orchestration/policies.json","utf8")), max=policy.maxAutomaticRetriesPerStage??2;
-const f=`.codex/orchestration/runs/${task}/dag.json`, s=JSON.parse(fs.readFileSync(f,"utf8")), n=s.nodes[nodeId];
-if(!n){console.error(`Unknown node: ${nodeId}`);process.exit(2);}
-if(n.retryCount>=max){n.status="blocked";fs.writeFileSync(f,JSON.stringify(s,null,2)+"\n");console.error(`Retry limit reached for ${nodeId}`);process.exit(3);}
-n.status="pending"; n.startedAt=null; n.finishedAt=null; fs.writeFileSync(f,JSON.stringify(s,null,2)+"\n");
-console.log(`Retry scheduled: ${task}/${nodeId}`);
+import { retryNode } from "./lib/legacy-scheduler.mjs";
+
+const [taskId, nodeId] = process.argv.slice(2);
+if (!taskId || !nodeId) {
+  console.error("Usage: pnpm harness:parallel:retry TASK-001 NODE");
+  process.exit(2);
+}
+
+try {
+  process.exit(retryNode(taskId, nodeId, ".codex/orchestration/parallel-workflow.json"));
+} catch (error) {
+  console.error(`Retry rejected: ${error.message}`);
+  process.exit(error.code === "RETRY_LIMIT_REACHED" ? 3 : 1);
+}

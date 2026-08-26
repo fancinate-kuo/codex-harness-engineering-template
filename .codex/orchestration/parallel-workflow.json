@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "poolSource": "agent-pool.json",
   "name": "parallel-feature-delivery",
   "nodes": [
     {

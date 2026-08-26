@@ -1,58 +1,82 @@
 # GitNexus Integration
 
-## Install / Analyze
+GitNexus is the repository's primary agent graph. P1 uses the pinned `1.6.9`
+CLI through the project package manager so local and CI invocations resolve the
+same toolchain:
 
-```bash
-npx gitnexus analyze
+```text
+pnpm exec gitnexus
 ```
 
-For one-time editor/MCP setup:
+The package dependency and root scripts provide this contract:
 
-```bash
-npx gitnexus setup
+```text
+gitnexus: 1.6.9 (development dependency)
+graph:analyze  -> node scripts/graph/analyze.mjs
+graph:build    -> node scripts/graph/build.mjs
+graph:status   -> node scripts/graph/status.mjs
+graph:doctor   -> node scripts/graph/doctor.mjs
+graph:query    -> node scripts/graph/query.mjs
 ```
 
-## Recommended MCP Usage
+## CLI workflow
 
-Codex should prefer the following GitNexus MCP tools:
+Build or refresh the index without changing `AGENTS.md`, `CLAUDE.md`, or local
+skill files:
 
-### context
-Use before editing an important symbol.
+```bash
+pnpm graph:analyze
+pnpm graph:status
+pnpm graph:doctor
+```
 
-Purpose:
-- callers
-- callees
-- references
-- related processes
-- surrounding architecture
+`graph:analyze` invokes `gitnexus analyze --index-only`. `graph:status` exits
+non-zero when the index is missing, stale, unavailable, or the provider process
+fails. `graph:doctor` additionally checks the pinned CLI version and graph
+store. Optional full-text search degradation is reported as a warning and does
+not fail the provider gate.
 
-### impact
-Use before modifying a shared symbol.
+Stable query routing is available through one entrypoint:
 
-Purpose:
-- blast radius
-- depth-grouped dependents
-- confidence/risk awareness
+```bash
+pnpm graph:query context <symbol>
+pnpm graph:query impact <symbol>
+pnpm graph:query query "<concept>"
+pnpm graph:query changes                 # current unstaged changes
+pnpm graph:query changes main            # compare against a base ref
+pnpm graph:query cypher "<cypher query>"
+```
 
-### detect_changes
-Use after implementation and before handoff/PR.
+Unknown query types, missing targets, and invalid base-ref arguments exit with
+code `2`. GitNexus process failures retain their original non-zero exit code.
+The query wrapper emits the GitNexus result directly; it does not silently
+convert a failed or empty graph query into an empty impact result.
 
-Purpose:
-- map git diff to impacted symbols/processes
-- detect accidental scope expansion
+## MCP workflow
 
-### query
-Use when starting from business/domain language rather than a symbol.
+MCP is the agent-facing interface, while the CLI is the setup, index, health,
+and deterministic script interface. Use GitNexus MCP for:
 
-Examples:
-- forum reply editing
-- authentication flow
-- settlement process
+- `context` before editing an important symbol;
+- `impact` before changing a shared or high-fanout symbol;
+- `query` when starting from a business or process concept;
+- `detect_changes` before handoff or commit review;
+- `cypher` only for graph questions not covered by the higher-level tools.
 
-### cypher
-Use only for custom graph questions not covered by higher-level tools.
+One-time MCP setup is local to each developer workstation:
 
-## Harness Rule
+```bash
+pnpm exec gitnexus setup
+```
 
-A stale GitNexus index is not automatically a failure for trivial documentation-only changes.
-For code changes, refresh it before final verification.
+The setup command may edit the local Codex/editor configuration. Do not commit
+that configuration, credentials, tokens, or generated MCP state to this repo.
+The repository only documents the interface; it does not claim that P1 starts
+a live Codex App Server turn.
+
+## Provider policy
+
+GitNexus remains the default provider in `graph/providers.json`. SCIP and Joern
+remain optional specialist providers and are not part of the P1 health gate.
+The `.gitnexus/` index is runtime state and remains ignored. Refresh it after
+commits or merges before running the final harness verification.
