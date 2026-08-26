@@ -50,7 +50,7 @@ SCIP and Joern are optional specialist providers.
 ## First Run
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
 
 # Build / update GitNexus graph
 pnpm graph:analyze
@@ -60,6 +60,16 @@ pnpm graph:status
 
 # Validate Harness
 pnpm harness:verify
+```
+
+GitHub Actions is the canonical CI entry point. Pull requests and pushes to
+`main` run the validation workflow on both Ubuntu and Windows with Node.js 22
+and pnpm 10. Local development should use the same frozen-lockfile install
+after enabling the repository's package manager with Corepack:
+
+```bash
+corepack enable
+pnpm install --frozen-lockfile
 ```
 
 ## GitNexus MCP
