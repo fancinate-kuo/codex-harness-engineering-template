@@ -22,4 +22,6 @@ graph/joern/workspace/
 !.codex/worktrees/README.md
 .codex/control-plane/snapshots/*
 !.codex/control-plane/snapshots/README.md
+.codex/observability/control-plane/*
+!.codex/observability/control-plane/README.md
 .codex/orchestration/locks/*.lock
