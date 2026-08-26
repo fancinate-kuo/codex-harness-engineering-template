@@ -4,12 +4,12 @@
   "version": "0.17.0",
   "packageManager": "pnpm@10.0.0",
   "scripts": {
-    "lint": "echo \"TODO: wire ESLint\"",
-    "typecheck": "echo \"TODO: wire TypeScript typecheck\"",
-    "test:unit": "echo \"TODO: wire Vitest unit tests\"",
-    "test:integration": "echo \"TODO: wire integration tests\"",
-    "test:e2e": "echo \"TODO: wire Playwright tests\"",
-    "test:architecture": "node scripts/harness/architecture-check.mjs",
+    "lint": "eslint scripts apps tests --max-warnings 0",
+    "typecheck": "tsc -p tsconfig.json --noEmit && pnpm --dir apps/control-plane typecheck",
+    "test:unit": "vitest run tests/unit --config vitest.config.ts",
+    "test:integration": "vitest run tests/integration --config vitest.config.ts",
+    "test:e2e": "playwright test --config playwright.config.ts",
+    "test:architecture": "node scripts/harness/architecture-check.mjs && node --test tests/architecture/architecture-check.test.mjs",
     "graph:build": "node scripts/graph/build.mjs",
     "graph:query": "node scripts/graph/query.mjs",
     "harness:repo-map": "node scripts/harness/repo-map.mjs",
@@ -81,6 +81,7 @@
     "harness:eval:aggregate": "node scripts/evaluation/aggregate.mjs",
     "harness:eval:compare": "node scripts/evaluation/compare.mjs",
     "harness:control:serve": "node scripts/control-plane/server.mjs",
+    "control:e2e:serve": "node scripts/control-plane/e2e-server.mjs",
     "harness:control:snapshot": "node scripts/control-plane/snapshot.mjs",
     "harness:control:dashboard-data": "node scripts/control-plane/dashboard-data.mjs",
     "control:dev": "pnpm --dir apps/control-plane dev",
@@ -96,5 +97,19 @@
   },
   "dependencies": {
     "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.0",
+    "eslint": "^9.22.0",
+    "eslint-plugin-vue": "^10.0.0",
+    "globals": "^15.15.0",
+    "playwright": "^1.51.0",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.26.0",
+    "vitest": "^3.0.8",
+    "vue-eslint-parser": "^10.2.0",
+    "vue-tsc": "^3.0.0"
   }
 }

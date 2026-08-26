@@ -8,5 +8,16 @@ test-results/
 .gitnexus/
 graph/joern/workspace/
 *.scip
-.codex/worktrees/
+.codex/orchestration/runs/*
+!.codex/orchestration/runs/README.md
+.codex/orchestration/requests/*.json
+!.codex/orchestration/requests/README.md
+.codex/orchestration/shared/*
+!.codex/orchestration/shared/README.md
+.codex/observability/tasks/*
+!.codex/observability/tasks/README.md
+.codex/evaluation/results/*
+!.codex/evaluation/results/README.md
+.codex/worktrees/*
+!.codex/worktrees/README.md
 .codex/orchestration/locks/*.lock

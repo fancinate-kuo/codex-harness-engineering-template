@@ -1,0 +1,68 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Analyze GitNexus graph
+        run: pnpm graph:analyze
+
+      - name: Run harness verification
+        run: pnpm harness:verify
+
+      - name: Upload validation artifacts on failure
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-artifacts-${{ matrix.os }}
+          if-no-files-found: ignore
+          path: |
+            .codex/orchestration/runs/
+            .codex/orchestration/requests/
+            .codex/orchestration/shared/
+            .codex/observability/tasks/
+            .codex/evaluation/results/
+            .gitnexus/
+            coverage/
+            dist/
+            playwright-report/
+            test-results/
