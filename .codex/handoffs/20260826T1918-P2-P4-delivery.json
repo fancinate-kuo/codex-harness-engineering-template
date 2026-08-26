@@ -1,0 +1,48 @@
+{
+  "task": "P2-P4-delivery",
+  "goal": "Deliver the generic reference module, runtime/PostgreSQL foundation, and Control Plane security hardening in staged protected PRs.",
+  "completed": [
+    "P2 generic reference module merged in PR #3 at 33c15f6e44b377347a57c23fa4ddc396aca0356a",
+    "P3 runtime store and PostgreSQL coordination merged in PR #4 at c948d5b",
+    "P4 Control Plane security hardening merged in PR #5 at 64079b886a95a9d7288aa871ed10dc81e4f6563f",
+    "All P2-P4 PRs used protected Ubuntu and Windows validation with squash auto-merge"
+  ],
+  "changedFiles": [
+    "packages/reference",
+    "scripts/persistence",
+    "scripts/control-plane",
+    "scripts/governance/approval-decide.mjs",
+    "db/migrations/003_runtime_coordination.sql",
+    "tests/unit",
+    "tests/integration",
+    "docs/persistence",
+    "docs/control-plane/security.md"
+  ],
+  "decisions": [
+    "Kept the implementation sequential because P2, P3, and P4 share package, runtime, Control Plane, and verification contracts.",
+    "Filesystem remains the local default; HARNESS_DATABASE_URL selects PostgreSQL runtime coordination and read models.",
+    "Loopback Control Plane access remains tokenless for local development; non-loopback binding requires HARNESS_CONTROL_PLANE_TOKEN.",
+    "GitNexus CLI 1.6.9 is pinned and graph freshness/provider health are required gates."
+  ],
+  "remaining": [
+    "A real PostgreSQL deployment still needs db:migrate and db:check against its configured database URL.",
+    "TLS termination, identity-to-actor mapping, RBAC, CSRF protection for cookie deployments, secret rotation, and durable audit shipping remain deployment responsibilities.",
+    "Live Codex App Server execution remains deferred to a later phase."
+  ],
+  "risks": [
+    "The local environment uses Node 24; canonical CI runtime remains Node 22 with pnpm 10.",
+    "The local GitNexus provider uses exact-scan semantic fallback because VECTOR index is unavailable on Windows."
+  ],
+  "verification": {
+    "unit": "PASS: 42 tests",
+    "integration": "PASS: 4 tests",
+    "e2e": "PASS: Control Plane Overview Playwright smoke",
+    "architecture": "PASS",
+    "controlPlaneBuild": "PASS",
+    "orchestration": "PASS: validation and deterministic smoke",
+    "graph": "PASS: GitNexus 1.6.9 doctor and fresh index at 64079b8",
+    "harness": "PASS: pnpm harness:verify on merged main",
+    "ci": "PASS: Validate ubuntu-latest and windows-latest for PR #5",
+    "workingTree": "CLEAN: generated runtime artifacts remain ignored"
+  }
+}
