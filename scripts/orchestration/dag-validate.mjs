@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { validateWorkflow } from "./lib/workflow.mjs";
 
 const taskId = process.argv[2];
 if (!taskId) {
@@ -13,48 +14,15 @@ if (!fs.existsSync(file)) {
 }
 
 const wf = JSON.parse(fs.readFileSync(file,"utf8"));
-const ids = new Set((wf.nodes ?? []).map(n => n.id));
-const errors = [];
+const catalog = JSON.parse(fs.readFileSync(".codex/orchestration/node-catalog.json", "utf8"));
+const pool = JSON.parse(fs.readFileSync(".codex/orchestration/agent-pool.json", "utf8"));
+const validation = validateWorkflow(wf, { catalog, pool, requiredNodes: ["planner", "pr", "review"] });
 
-if (ids.size !== (wf.nodes ?? []).length) errors.push("Duplicate node IDs");
-
-for (const n of wf.nodes ?? []) {
-  for (const d of n.dependsOn ?? []) {
-    if (!ids.has(d)) errors.push(`${n.id} depends on missing node ${d}`);
-    if (d === n.id) errors.push(`${n.id} depends on itself`);
-  }
-}
-
-function visit(id, visiting, visited, byId) {
-  if (visiting.has(id)) return false;
-  if (visited.has(id)) return true;
-  visiting.add(id);
-  for (const d of byId[id]?.dependsOn ?? []) {
-    if (!visit(d, visiting, visited, byId)) return false;
-  }
-  visiting.delete(id);
-  visited.add(id);
-  return true;
-}
-
-const byId = Object.fromEntries((wf.nodes ?? []).map(n => [n.id,n]));
-const visiting = new Set(), visited = new Set();
-for (const id of ids) {
-  if (!visit(id,visiting,visited,byId)) {
-    errors.push("Cycle detected");
-    break;
-  }
-}
-
-if (!ids.has("planner")) errors.push("planner is required");
-if (!ids.has("pr")) errors.push("pr is required");
-if (!ids.has("review")) errors.push("review is required");
-
-if (errors.length) {
+if (!validation.valid) {
   console.error("Compiled DAG validation FAILED");
-  for (const e of errors) console.error(`- ${e}`);
+  for (const error of validation.errors) console.error(`- ${error.message}`);
   process.exit(1);
 }
 
 console.log("Compiled DAG validation PASS");
-console.log(`Nodes: ${[...ids].join(", ")}`);
+console.log(`Nodes: ${(wf.nodes ?? []).map(node => node.id).join(", ")}`);

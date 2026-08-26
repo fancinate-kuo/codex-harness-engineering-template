@@ -3,6 +3,9 @@ import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 export const REQUIRED_GATES = Object.freeze([
+  ['graph-doctor', ['run', 'graph:doctor']],
+  ['orchestration-validate', ['run', 'harness:orchestration:validate']],
+  ['orchestration-smoke', ['run', 'harness:orchestration:smoke']],
   ['lint', ['run', 'lint']],
   ['typecheck', ['run', 'typecheck']],
   ['unit', ['run', 'test:unit']],
@@ -39,6 +42,10 @@ export function runHarnessVerify(environment = process.env, spawn = spawnSync) {
   }
 
   for (const [name, args] of REQUIRED_GATES) {
+    if (name === 'graph-doctor' && environment.HARNESS_SKIP_GRAPH === '1') {
+      console.log('\n== Harness Gate: graph-doctor SKIPPED for local bootstrap ==')
+      continue
+    }
     const status = runGate(name, args, spawn)
     if (status !== 0) {
       console.error(`Harness Gate FAILED at: ${name}`)

@@ -9,11 +9,11 @@ const wf=JSON.parse(fs.readFileSync(wfFile,"utf8"));
 
 const nodes={};
 for(const n of wf.nodes){
-  nodes[n.id]={status:"pending",retryCount:0,worktree:null,threadId:null,startedAt:null,finishedAt:null};
+  nodes[n.id]={status:"pending",retryCount:0,worktree:null,branch:null,threadId:null,requestId:null,attemptId:null,active:false,startedAt:null,finishedAt:null};
 }
 
 const state={
-  version:1,
+  version:2,
   taskId,
   workflow:wf.name,
   dynamic:true,

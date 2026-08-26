@@ -3,12 +3,45 @@
   "title": "Parallel DAG State",
   "type": "object",
   "required": [
+    "version",
     "taskId",
+    "workflow",
     "nodes"
   ],
   "properties": {
+    "version": {
+      "const": 2
+    },
     "taskId": {
       "type": "string"
+    },
+    "workflow": {
+      "type": "string"
+    },
+    "requests": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["taskId", "nodeId", "attemptId", "status"],
+        "properties": {
+          "taskId": { "type": "string" },
+          "nodeId": { "type": "string" },
+          "attemptId": { "type": "string" },
+          "status": { "enum": ["queued", "passed", "failed", "blocked"] }
+        }
+      }
+    },
+    "locks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["taskId", "owner"],
+        "properties": {
+          "taskId": { "type": "string" },
+          "owner": { "type": "string" },
+          "acquiredAt": { "type": ["string", "null"] }
+        }
+      }
     },
     "nodes": {
       "type": "object",
@@ -31,8 +64,17 @@
             ]
           },
           "retryCount": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
+          "requestId": { "type": ["string", "null"] },
+          "attemptId": { "type": ["string", "null"] },
+          "branch": { "type": ["string", "null"] },
+          "active": { "type": "boolean" },
+          "blockedReason": { "type": "string" },
+          "artifacts": { "type": "array" },
+          "verification": { "type": ["object", "null"] },
+          "failure": { "type": ["object", "null"] },
           "worktree": {
             "type": [
               "string",

@@ -58,6 +58,9 @@ pnpm graph:analyze
 # Check graph freshness
 pnpm graph:status
 
+# Check the pinned CLI, index, and graph provider
+pnpm graph:doctor
+
 # Validate Harness
 pnpm harness:verify
 ```
@@ -74,19 +77,29 @@ pnpm install --frozen-lockfile
 
 ## GitNexus MCP
 
-Run once on a developer workstation:
+Configure MCP once on a developer workstation (local editor configuration):
 
 ```bash
-npx gitnexus setup
+pnpm graph:setup
 ```
 
 Then index the repository:
 
 ```bash
-npx gitnexus analyze
+pnpm graph:analyze
 ```
 
-Codex should use GitNexus MCP for:
+For deterministic CLI queries, use:
+
+```bash
+pnpm graph:query context <symbol>
+pnpm graph:query impact <symbol>
+pnpm graph:query query "<concept>"
+pnpm graph:query changes [base]
+pnpm graph:query cypher "<cypher query>"
+```
+
+Codex agents should use GitNexus MCP for:
 - context
 - impact
 - detect_changes
@@ -94,6 +107,9 @@ Codex should use GitNexus MCP for:
 - cypher
 
 See `docs/graph/gitnexus.md`.
+
+MCP credentials and personal editor configuration remain local and are never
+committed to this repository.
 
 ## Standard Agent Flow
 
@@ -178,7 +194,8 @@ The runner selects the next stage and writes an agent request under:
 
 `.codex/orchestration/requests/`
 
-After the external agent writes the expected artifact, run the same command again:
+After the external agent writes `<stage>.result.json` and its expected artifacts,
+run the same command again:
 
 ```bash
 pnpm harness:run TASK-001
@@ -193,9 +210,10 @@ pnpm harness:resume TASK-001
 ```
 
 
-## Codex-native Adapter
+## Codex-native Adapter (deferred)
 
-v6 adds direct Codex App Server execution.
+The Codex App Server adapter is retained for a later phase. P1 does not start
+live Codex turns, approvals, streaming, or automatic merges.
 
 Check local Codex:
 
@@ -215,7 +233,8 @@ Run the next workflow stage using Codex:
 pnpm harness:run:codex TASK-001
 ```
 
-The adapter persists Codex thread IDs per task/stage so interrupted work can resume.
+The compatibility command remains available, but live execution is not part of
+the P1 completion gate.
 
 ## Parallel DAG Scheduler
 
@@ -223,9 +242,19 @@ The adapter persists Codex thread IDs per task/stage so interrupted work can res
 pnpm harness:parallel:init TASK-001
 pnpm harness:parallel:run TASK-001
 pnpm harness:parallel:status TASK-001
-pnpm harness:parallel:complete TASK-001 backend passed
+pnpm harness:parallel:complete TASK-001 backend result.json
 pnpm harness:parallel:retry TASK-001 backend
 pnpm harness:parallel:dot
+```
+
+P1 scheduler limits come only from `.codex/orchestration/agent-pool.json`:
+global 4, mutable 2, and read-only 4. Mutable nodes always receive an isolated
+worktree. Invocation requests and stage results are checked for identity,
+artifacts, evidence, retry policy, locks, and idempotency.
+
+```bash
+pnpm harness:orchestration:validate
+pnpm harness:orchestration:smoke
 ```
 
 ## Dynamic DAG Compiler

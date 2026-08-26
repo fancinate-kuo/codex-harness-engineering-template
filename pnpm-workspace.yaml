@@ -1,3 +1,8 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+onlyBuiltDependencies:
+  - "@ladybugdb/core"
+  - gitnexus
+  - tree-sitter

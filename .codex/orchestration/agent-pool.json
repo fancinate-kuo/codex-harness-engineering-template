@@ -2,7 +2,7 @@
   "version": 1,
   "limits": {
     "global": 4,
-    "mutable": 3,
+    "mutable": 2,
     "readOnly": 4
   },
   "roles": {

@@ -4,6 +4,8 @@
     "gitnexus": {
       "enabled": true,
       "role": "primary-agent-graph",
+      "version": "1.6.9",
+      "cli": "pnpm exec gitnexus",
       "capabilities": [
         "structure",
         "symbols",

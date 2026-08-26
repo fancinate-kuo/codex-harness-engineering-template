@@ -43,8 +43,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Prepare GitNexus native dependencies
+        run: pnpm graph:prepare
+
       - name: Analyze GitNexus graph
         run: pnpm graph:analyze
+
+      - name: Verify GitNexus provider health
+        run: pnpm graph:doctor
 
       - name: Install Playwright browser dependencies (Ubuntu)
         if: runner.os == 'Linux'

@@ -1,21 +1,31 @@
-import fs from "node:fs";
-import path from "node:path";
 import { requestDir, sharedDir, saveJson } from "./state.mjs";
 
 export function writeInvocationRequest({ taskId, stage, run, workflow }) {
   const file = `${requestDir()}/${taskId}__${stage.id}.json`;
 
+  run.attempts ??= {};
+  const attempt = run.attempts[stage.id] ?? 1;
+  run.attempts[stage.id] = attempt;
+  const requestId = `${taskId}:${stage.id}:request-${attempt}`;
+  const attemptId = `${taskId}:${stage.id}:attempt-${attempt}`;
+
   const request = {
+    version: 1,
+    requestId,
+    attemptId,
     taskId,
+    nodeId: stage.id,
     stageId: stage.id,
     agent: stage.agent,
-    state: stage.state,
-    mutable: stage.mutable,
+    ...(stage.role ? { role: stage.role } : {}),
+    mutable: Boolean(stage.mutable),
     worktree: run.worktree ?? null,
-    agentInstructions: `.codex/agents/${stage.agent}.md`,
+    branch: run.branch ?? null,
+    dependsOn: stage.dependsOn ?? [],
+    allowSkippedDependencies: Boolean(stage.allowSkippedDependencies),
+    expectedArtifacts: stage.produces ?? [],
+    instructions: `.codex/agents/${stage.agent}.md`,
     sharedWorkspace: sharedDir(taskId),
-    requires: stage.requires ?? [],
-    expectedOutputs: stage.produces ?? [],
     workflow: workflow.name,
     createdAt: new Date().toISOString()
   };

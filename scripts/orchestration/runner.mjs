@@ -8,9 +8,10 @@ import {
   appendHistory
 } from "./lib/state.mjs";
 import { validateRequirement, hasArtifact } from "./lib/gates.mjs";
-import { ensureWorktree } from "./lib/worktree.mjs";
+import { ensureNodeWorktree } from "./lib/node-worktree.mjs";
 import { shouldRunConditional } from "./lib/conditions.mjs";
 import { writeInvocationRequest } from "./lib/invoke.mjs";
+import { validateInvocationRequest, validateStageResult } from "./lib/results.mjs";
 
 const taskId = process.argv[2];
 const flags = new Set(process.argv.slice(3));
@@ -49,7 +50,39 @@ const skipHarnessVerify = flags.has("--skip-harness-verify");
 const once = flags.has("--once");
 
 function stageCompleted(stage) {
-  return (stage.produces ?? []).every(name => hasArtifact(taskId, name));
+  const resultFile = `${sharedDir(taskId)}/${stage.id}.result.json`;
+  const result = loadJson(resultFile);
+  if (!result) return false;
+
+  const request = loadJson(`.codex/orchestration/requests/${taskId}__${stage.id}.json`);
+  if (!request) return false;
+
+  const node = {
+    id: stage.id,
+    agent: stage.agent,
+    role: stage.role,
+    mutable: Boolean(stage.mutable),
+    worktreeRequired: Boolean(stage.mutable),
+    produces: stage.produces ?? [],
+    retryable: Boolean(stage.retryable),
+    maxRetries: stage.maxRetries ?? (stage.retryable ? 2 : 0)
+  };
+  const workflowContract = { taskId, nodes: [node] };
+  const requestValidation = validateInvocationRequest(request, { workflow: workflowContract });
+  const resultValidation = validateStageResult(result, {
+    workflow: workflowContract,
+    artifactExists: artifact => hasArtifact(taskId, artifact)
+  });
+  if (!requestValidation.valid || !resultValidation.valid) {
+    const errors = [...requestValidation.errors, ...resultValidation.errors];
+    console.error(`Stage result rejected for ${stage.id}: ${errors.map(error => error.message).join("; ")}`);
+    return false;
+  }
+  if (result.requestId !== request.requestId || result.attemptId !== request.attemptId) {
+    console.error(`Stage result identity mismatch for ${stage.id}`);
+    return false;
+  }
+  return result.status === "passed";
 }
 
 function unmetRequirements(stage) {
@@ -98,7 +131,8 @@ while (true) {
 
   if (stage.mutable) {
     try {
-      ensureWorktree(taskId);
+      run.worktree = ensureNodeWorktree(taskId, stage.id);
+      saveJson(runFile(taskId), run);
       run = loadJson(runFile(taskId));
     } catch (err) {
       console.error(err.message);
@@ -123,6 +157,7 @@ while (true) {
     run,
     workflow
   });
+  saveJson(runFile(taskId), run);
 
   console.log(`Stage ready: ${stage.id}`);
   console.log(`Agent: ${stage.agent}`);

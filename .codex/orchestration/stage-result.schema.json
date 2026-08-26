@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Harness Stage Result",
+  "type": "object",
+  "required": [
+    "version",
+    "taskId",
+    "nodeId",
+    "stageId",
+    "attemptId",
+    "requestId",
+    "status",
+    "artifacts"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "taskId": { "type": "string", "minLength": 1 },
+    "nodeId": { "type": "string", "minLength": 1 },
+    "stageId": { "type": "string", "minLength": 1 },
+    "attemptId": { "type": "string", "minLength": 1 },
+    "requestId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["passed", "failed", "blocked"] },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "path": { "type": "string" },
+              "sha256": { "type": "string" }
+            }
+          }
+        ]
+      }
+    },
+    "verification": {
+      "type": "object",
+      "required": ["evidence"],
+      "properties": { "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } } }
+    },
+    "failure": {
+      "type": "object",
+      "required": ["summary"],
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "retryable": { "type": "boolean" }
+      }
+    },
+    "graphProvenance": { "$ref": "./graph-provenance.schema.json" },
+    "impactArtifact": { "type": "object" },
+    "completedAt": { "type": "string", "format": "date-time" }
+  }
+}
