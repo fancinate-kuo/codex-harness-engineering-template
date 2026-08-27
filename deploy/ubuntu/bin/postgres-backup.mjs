@@ -63,8 +63,19 @@ function pgpassField(value) {
 }
 
 export function buildPostgresEnvironment(connection, passFile, baseEnvironment = process.env) {
+  const sanitizedEnvironment = { ...baseEnvironment };
+  for (const key of [
+    "HARNESS_DATABASE_URL",
+    "HARNESS_DATABASE_SECRETS_FILE",
+    "PGPASSWORD",
+    "PGSERVICE",
+    "PGSERVICEFILE",
+  ]) {
+    delete sanitizedEnvironment[key];
+  }
+
   return Object.freeze({
-    ...baseEnvironment,
+    ...sanitizedEnvironment,
     PGHOST: connection.host,
     PGPORT: connection.port,
     PGUSER: connection.user,

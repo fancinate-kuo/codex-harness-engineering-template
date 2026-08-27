@@ -110,9 +110,15 @@ describe("Ubuntu deployment target", () => {
 
   it("keeps database credentials out of child command arguments", () => {
     const connection = parseDatabaseConnection("postgres://harness:p%40ss@db.example:5432/harness?sslmode=require");
-    const environment = buildPostgresEnvironment(connection, "/tmp/harness-pgpass");
+    const environment = buildPostgresEnvironment(connection, "/tmp/harness-pgpass", {
+      PGPASSWORD: "runner-default",
+      HARNESS_DATABASE_URL: "postgres://should-not-leak",
+      PGSERVICEFILE: "/tmp/postgresql-service.conf",
+    });
     expect(environment.PGPASSFILE).toBe("/tmp/harness-pgpass");
     expect(environment.PGPASSWORD).toBeUndefined();
+    expect(environment.HARNESS_DATABASE_URL).toBeUndefined();
+    expect(environment.PGSERVICEFILE).toBeUndefined();
     expect(environment.PGSSLMODE).toBe("require");
     expect(backupFilePath("/var/lib/harness/backups", new Date("2026-08-27T04:00:00.000Z")))
       .toBe("/var/lib/harness/backups/harness-20260827T040000Z.dump");
