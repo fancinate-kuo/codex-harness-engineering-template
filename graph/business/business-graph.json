@@ -7,6 +7,13 @@
       "features": [
         "forum.reply.edit"
       ]
+    },
+    {
+      "id": "REQ-SORA-001",
+      "title": "Readers can discover and read published Sora articles",
+      "features": [
+        "sora.article.browse"
+      ]
     }
   ],
   "features": [
@@ -30,12 +37,39 @@
         "forum-team"
       ],
       "risk": "medium"
+    },
+    {
+      "id": "sora.article.browse",
+      "title": "Browse Sora articles",
+      "capability": "sora.content-discovery",
+      "module": "forum",
+      "apis": [
+        "GET /forum/articles",
+        "GET /forum/articles/:slug"
+      ],
+      "tables": [],
+      "tests": [
+        "tests/integration/forum/article-browsing",
+        "tests/e2e/forum/article-browsing"
+      ],
+      "adrs": [],
+      "owners": [
+        "sora-team"
+      ],
+      "risk": "medium"
     }
   ],
   "capabilities": [
     {
       "id": "forum.reply-management",
       "title": "Forum reply management",
+      "modules": [
+        "forum"
+      ]
+    },
+    {
+      "id": "sora.content-discovery",
+      "title": "Sora content discovery",
       "modules": [
         "forum"
       ]
@@ -61,6 +95,14 @@
     {
       "id": "PATCH /replies/:id",
       "feature": "forum.reply.edit"
+    },
+    {
+      "id": "GET /forum/articles",
+      "feature": "sora.article.browse"
+    },
+    {
+      "id": "GET /forum/articles/:slug",
+      "feature": "sora.article.browse"
     }
   ],
   "tables": [
@@ -74,6 +116,18 @@
       "id": "tests/integration/forum/reply-edit",
       "verifies": [
         "forum.reply.edit"
+      ]
+    },
+    {
+      "id": "tests/integration/forum/article-browsing",
+      "verifies": [
+        "sora.article.browse"
+      ]
+    },
+    {
+      "id": "tests/e2e/forum/article-browsing",
+      "verifies": [
+        "sora.article.browse"
       ]
     },
     {

@@ -1,0 +1,158 @@
+[
+  {
+    "slug": "quiet-technology",
+    "status": "published",
+    "categoryKey": "technology",
+    "title": "當科技變得安靜，我們終於聽見自己",
+    "excerpt": "真正好的科技，不是讓生活更快，而是讓我們把注意力放回真正重要的地方。",
+    "author": {
+      "name": "陳以安",
+      "initials": "EA",
+      "tone": "tone-sky",
+      "bio": "寫關於科技與人的距離。"
+    },
+    "publishedAt": "2026-08-27T01:00:00.000Z",
+    "readCount": 2400,
+    "replyCount": 84,
+    "readDurationMinutes": 8,
+    "colorClass": "sky",
+    "featured": true,
+    "trendingRank": null,
+    "pullQuote": "科技的終點，也許不是更多，而是剛剛好。",
+    "content": [
+      "我們很習慣把科技理解成加速器：更快的訊息、更短的路徑、更即時的回覆。但速度增加之後，真正稀缺的反而變成注意力。",
+      "當工具開始替我們過濾噪音，最好的結果不是留下更多通知，而是讓我們有餘裕重新選擇要聽見什麼。",
+      "科技可以很強大，也可以很安靜。安靜不是退回過去，而是讓技術把空間還給人。"
+    ]
+  },
+  {
+    "slug": "space-to-breathe",
+    "status": "published",
+    "categoryKey": "design",
+    "title": "留白不是空白，是給想法呼吸的地方",
+    "excerpt": "從一張海報到一個產品，少一點，有時候才更接近想說的話。",
+    "author": {
+      "name": "蘇菲亞",
+      "initials": "SF",
+      "tone": "tone-peach",
+      "bio": "產品設計師，練習留白。"
+    },
+    "publishedAt": "2026-08-27T00:30:00.000Z",
+    "readCount": 1800,
+    "replyCount": 36,
+    "readDurationMinutes": 6,
+    "colorClass": "peach",
+    "featured": false,
+    "trendingRank": 1,
+    "pullQuote": "設計不是填滿畫面，而是留下對的空間。",
+    "content": [
+      "設計裡的留白，從來不只是把元素拿掉。它更像是一種邀請，讓使用者可以在訊息與訊息之間停留一下。",
+      "當每一個角落都在爭取注意力，畫面就失去了節奏。真正有力量的介面，知道什麼時候應該說話，也知道什麼時候應該保持安靜。",
+      "少一點不代表少做一點，而是更準確地把力氣用在值得被看見的地方。"
+    ]
+  },
+  {
+    "slug": "notification-free-afternoon",
+    "status": "published",
+    "categoryKey": "life",
+    "title": "我們為什麼需要一個沒有通知的下午？",
+    "excerpt": "把手機翻面，不是逃離世界，是重新決定什麼值得被看見。",
+    "author": {
+      "name": "林子晴",
+      "initials": "LZ",
+      "tone": "tone-green",
+      "bio": "在城市裡練習慢下來。"
+    },
+    "publishedAt": "2026-08-26T23:00:00.000Z",
+    "readCount": 1200,
+    "replyCount": 28,
+    "readDurationMinutes": 5,
+    "colorClass": "green",
+    "featured": false,
+    "trendingRank": 3,
+    "pullQuote": "安靜不是沒有發生事情，而是終於有空感覺。",
+    "content": [
+      "我們常常以為休息是把待辦事項清空，但通知不會因為我們坐下來就消失。於是身體停下了，注意力卻還在奔跑。",
+      "沒有通知的下午，不需要任何宏大的計畫。只要把回應世界的權利暫時收回來，讓一段時間不必立刻產生結果。",
+      "慢下來不是效率的反面，而是重新感覺生活正在發生。"
+    ]
+  },
+  {
+    "slug": "before-the-light-falls",
+    "status": "published",
+    "categoryKey": "photo",
+    "title": "光落下來以前，房間已經知道今天的顏色",
+    "excerpt": "攝影有時不是捕捉，而是等待一個場景把自己交出來。",
+    "author": {
+      "name": "周野",
+      "initials": "ZY",
+      "tone": "tone-violet",
+      "bio": "拍攝日常裡不急著說話的光。"
+    },
+    "publishedAt": "2026-08-26T22:00:00.000Z",
+    "readCount": 986,
+    "replyCount": 19,
+    "readDurationMinutes": 4,
+    "colorClass": "violet",
+    "featured": false,
+    "trendingRank": 4,
+    "pullQuote": "最好的照片，是你差一點就錯過的那一刻。",
+    "content": [
+      "有些光線只停留幾分鐘，卻能改變整個房間的情緒。攝影師要做的，常常不是追趕它，而是先學會等待。",
+      "相機讓我們保存瞬間，但真正重要的練習，是在按下快門之前看得更久一點。",
+      "當我們不急著命名眼前的景色，畫面反而會慢慢說出自己的名字。"
+    ]
+  },
+  {
+    "slug": "first-line-for-tomorrow",
+    "status": "published",
+    "categoryKey": "developer",
+    "title": "寫給未來自己的第一行程式碼",
+    "excerpt": "在工具越來越聰明的時代，保留一點親手理解的笨拙。",
+    "author": {
+      "name": "高橋悠",
+      "initials": "TY",
+      "tone": "tone-gold",
+      "bio": "寫程式，也寫給明天的自己。"
+    },
+    "publishedAt": "2026-08-26T21:00:00.000Z",
+    "readCount": 842,
+    "replyCount": 42,
+    "readDurationMinutes": 7,
+    "colorClass": "gold",
+    "featured": false,
+    "trendingRank": null,
+    "pullQuote": "理解一件事的最好方式，仍然是把它做出來。",
+    "content": [
+      "工具可以替我們生成越來越多的程式碼，但理解仍然需要時間。那一點不熟練，往往正是我們和問題建立關係的地方。",
+      "寫給未來自己的第一行程式碼，不一定要漂亮。它只需要誠實地留下：我曾經在這裡思考過。",
+      "當工具變得更聰明，我們更需要保留親手拆解與重新組合的能力。"
+    ]
+  },
+  {
+    "slug": "what-ai-leaves-behind",
+    "status": "published",
+    "categoryKey": "technology",
+    "title": "AI 會留下什麼，給那些不急著被取代的人？",
+    "excerpt": "答案也許不在更快學會工具，而在重新想像我們想成為誰。",
+    "author": {
+      "name": "王若彤",
+      "initials": "WT",
+      "tone": "tone-blue",
+      "bio": "研究 AI、創作與工作的縫隙。"
+    },
+    "publishedAt": "2026-08-26T19:00:00.000Z",
+    "readCount": 764,
+    "replyCount": 31,
+    "readDurationMinutes": 9,
+    "colorClass": "blue",
+    "featured": false,
+    "trendingRank": 2,
+    "pullQuote": "當機器學會生成，我們更需要練習選擇。",
+    "content": [
+      "每一次工具革命都會重新分配工作，但它不會替我們回答一個更難的問題：在可被自動化的事情之外，我們想把時間留給什麼？",
+      "AI 帶來的不是單一答案，而是一個需要反覆選擇的空間。選擇什麼值得相信、什麼值得親手完成，也選擇什麼不必再追趕。",
+      "也許最後留下來的，不是某一種技能，而是我們仍然願意對世界保持好奇。"
+    ]
+  }
+]

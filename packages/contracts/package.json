@@ -1,0 +1,10 @@
+{
+  "name": "@harness/contracts",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./forum": "./src/forum/index.ts"
+  }
+}

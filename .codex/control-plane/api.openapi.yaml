@@ -13,6 +13,44 @@ paths:
       responses:
         '200':
           description: Task list
+  /forum/articles:
+    get:
+      description: Published Sora article discovery; Control Plane auth and origin policy apply.
+      parameters:
+        - in: query
+          name: category
+          required: false
+          schema:
+            type: string
+            enum: [all, technology, design, life, photo, developer]
+        - in: query
+          name: q
+          required: false
+          schema:
+            type: string
+            maxLength: 100
+      responses:
+        '200':
+          description: Article summaries and category metadata
+        '400':
+          description: Invalid category or query
+  /forum/articles/{slug}:
+    get:
+      description: Read one published Sora article by slug; Control Plane auth and origin policy apply.
+      parameters:
+        - in: path
+          name: slug
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+      responses:
+        '200':
+          description: Full article detail
+        '400':
+          description: Invalid article slug
+        '404':
+          description: Article not found
   /tasks/{taskId}:
     get:
       parameters:

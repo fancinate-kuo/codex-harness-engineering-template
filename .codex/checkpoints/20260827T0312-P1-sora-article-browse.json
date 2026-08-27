@@ -1,0 +1,22 @@
+{
+  "task": "P1-sora-article-browse",
+  "status": "completed",
+  "createdAt": "2026-08-27T03:12:15.406Z",
+  "affectedModules": [
+    "forum",
+    "control-plane"
+  ],
+  "completed": [
+    "Forum article contracts and domain validation",
+    "Filesystem-backed article repository and read-only API",
+    "Sora API-backed list, category, search, and detail routes",
+    "Control Plane root-route regression coverage",
+    "Unit, integration, architecture, E2E, and Harness verification"
+  ],
+  "next": [
+    "Add identity and write capabilities in a later Sora slice",
+    "Add PostgreSQL adapter when durable forum persistence is required"
+  ],
+  "risk": "medium",
+  "verification": "pnpm harness:verify PASS"
+}
