@@ -2,7 +2,7 @@
   "task": "P2-production-readiness",
   "goal": "Deliver a provider-neutral production readiness baseline for the Control Plane and PostgreSQL runtime without adding cloud-specific deployment or first-party identity.",
   "completed": [
-    "Created codex/p2-production-readiness stacked from P1 commit e024603 while P1 PR #10 remains open.",
+    "P1 PR #10 merged to main as ec677b4 and P2 PR #11 merged to main as df480b5.",
     "Added centralized Control Plane runtime configuration with production fail-closed token/origin policy, bounded timeouts, version reporting, audit sink configuration, and database pool validation.",
     "Added GET /ready readiness probe with safe 503 responses for unavailable or incomplete PostgreSQL state; retained GET /health as liveness.",
     "Refactored Control Plane server startup into create/start interfaces with structured request/error logging, request ids, redaction, HTTP timeouts, graceful shutdown, SSE drain, and pool close.",
@@ -37,26 +37,26 @@
     "Do not add a database migration, auto-migrate on startup, cloud deployment, container image, or automatic release behavior in P2."
   ],
   "remaining": [
-    "Run the forced PostgreSQL integration gate in GitHub Actions after push; local Docker daemon and psql are unavailable.",
-    "After P1 PR #10 merges, align/rebase this stacked branch onto the merged main before opening the P2 PR.",
-    "Commit/push/PR creation is intentionally not performed in this implementation turn."
+    "Select the first deployment target and implement provider-specific edge security, secret management, durable audit shipping, and backup/restore baseline.",
+    "Keep the P2 application contract provider-neutral while documenting and testing the selected deployment adapter."
   ],
   "risks": [
     "GitNexus impact for getPool is CRITICAL: 18 impacted symbols, 9 execution processes, and 3 modules; existing persistence tests and the new real-PostgreSQL suite cover the compatibility surface.",
     "PostgreSQL CI uses a service container only on Ubuntu; Windows continues to validate the cross-platform harness without a local database service.",
-    "P1 PR #10 is still open, so the current P2 branch includes P1 as its parent until the branch is aligned after merge."
+    "P2 provides the application security/readiness baseline; TLS, identity, rate limiting, durable audit shipping, and backup/restore execution remain deployment work."
   ],
   "verification": {
     "lint": "PASS",
     "typecheck": "PASS",
     "unit": "PASS: 53 tests",
     "integration": "PASS: 8 tests; 2 PostgreSQL tests skipped without local DB",
-    "postgres": "NOT RUN locally: test runner skipped because HARNESS_DATABASE_URL is absent; CI sets HARNESS_REQUIRE_POSTGRES=1",
+    "postgres": "PASS in GitHub Actions PostgreSQL 16 contract job; local runner skips without HARNESS_DATABASE_URL",
     "e2e": "PASS: 4 tests",
     "architecture": "PASS",
     "businessGraph": "PASS: 3 requirements, 3 features, 3 capabilities, 3 modules",
     "graph": "PASS: GitNexus 1.6.9 refreshed, 1839 nodes, 3259 edges, status up-to-date",
     "harness": "PASS: pnpm harness:verify",
-    "diff": "PASS: git diff --check"
+    "diff": "PASS: git diff --check",
+    "postMergeCi": "PASS: main post-merge Validate workflow"
   }
 }
