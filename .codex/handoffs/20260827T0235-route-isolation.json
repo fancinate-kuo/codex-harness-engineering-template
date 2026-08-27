@@ -1,0 +1,35 @@
+{
+  "task": "route-isolation",
+  "goal": "Keep the Control Plane root entry stable while exposing the Sora forum through an independent route.",
+  "completed": [
+    "Restored / to the Control Plane Overview",
+    "Added /forum for the Sora forum homepage",
+    "Switched the shell selection to route metadata",
+    "Added a Sora link back to the management dashboard",
+    "Added root-route and forum-route E2E coverage"
+  ],
+  "changedFiles": [
+    "apps/control-plane/src/main.ts",
+    "apps/control-plane/src/App.vue",
+    "apps/control-plane/src/styles.css",
+    "apps/control-plane/src/views/ForumView.vue",
+    "tests/e2e/control-plane.spec.ts"
+  ],
+  "decisions": [
+    "The Control Plane remains the canonical root application entry.",
+    "Sora is an independent frontend prototype at /forum.",
+    "Forum layout selection uses route metadata instead of a route-name special case."
+  ],
+  "remaining": [],
+  "risks": [
+    "Sora remains a mock frontend with localStorage demo authentication and no production forum API."
+  ],
+  "verification": {
+    "unit": "PASS: 42 tests",
+    "integration": "PASS: 4 tests",
+    "e2e": "PASS: 3 tests",
+    "architecture": "PASS",
+    "harness": "PASS: pnpm harness:verify",
+    "graph": "PASS: GitNexus 1.6.9, 1,625 nodes, 2,758 edges, 88 flows"
+  }
+}

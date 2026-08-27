@@ -13,6 +13,7 @@
       </nav>
 
       <div class="sora-header-actions">
+        <RouterLink class="control-plane-link" to="/">管理後台</RouterLink>
         <button class="header-search" type="button" aria-label="開啟搜尋" @click="openSearch">
           <svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
             <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.7" />

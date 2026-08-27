@@ -10,9 +10,10 @@ import './styles.css'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', name: 'forum-home', component: ForumView },
-    { path: '/tasks/:taskId', component: TaskDetailView, props: true },
-    { path: '/evaluation', component: EvaluationView }
+    { path: '/', name: 'control-plane-overview', component: OverviewView },
+    { path: '/forum', name: 'forum-home', component: ForumView, meta: { layout: 'forum' } },
+    { path: '/tasks/:taskId', name: 'task-detail', component: TaskDetailView, props: true },
+    { path: '/evaluation', name: 'evaluation', component: EvaluationView }
   ]
 })
 

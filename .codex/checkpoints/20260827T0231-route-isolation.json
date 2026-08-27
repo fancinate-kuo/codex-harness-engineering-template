@@ -1,0 +1,13 @@
+{
+  "task": "route-isolation",
+  "status": "completed",
+  "createdAt": "2026-08-27T02:31:24.007Z",
+  "affectedModules": ["apps/control-plane", "tests/e2e"],
+  "completed": [
+    "Restored the Control Plane Overview at the root route",
+    "Moved the Sora forum homepage to /forum",
+    "Added route metadata for the forum layout",
+    "Restored root-route E2E regression coverage"
+  ],
+  "next": []
+}
