@@ -29,12 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const isForumHome = computed(() => route.name === 'forum-home')
+const isForumHome = computed(() => route.meta.layout === 'forum')
 const connected = ref(false)
 let es: EventSource | null = null
 

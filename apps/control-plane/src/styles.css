@@ -282,6 +282,15 @@ body:has(.sora-page) {
   gap: 10px;
 }
 
+.control-plane-link {
+  color: var(--sora-muted);
+  font-size: .68rem;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.control-plane-link:hover { color: var(--sora-ink); }
+
 .header-search,
 .user-button,
 .login-button,
@@ -599,6 +608,7 @@ body:has(.sora-page) {
   .sora-header.is-compact { min-height: 61px; }
   .header-search { min-width: 38px; padding: 0 10px; }
   .header-search span, .header-search kbd { display: none; }
+  .control-plane-link { display: none; }
   .search-popover { right: 0; width: min(410px, calc(100vw - 32px)); }
   .sora-intro { display: block; padding-bottom: 39px; }
   .intro-copy { margin: 22px 0 0; text-align: left; }
