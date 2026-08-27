@@ -1,0 +1,14 @@
+{
+  "task": "forum-homepage",
+  "status": "completed",
+  "createdAt": "2026-08-27T01:14:34.689Z",
+  "affectedModules": ["apps/control-plane", "tests/e2e"],
+  "completed": [
+    "Replaced the Control Plane root route with the Sora forum homepage",
+    "Added responsive three-column, two-column, and collapsible mobile layouts",
+    "Added mock search, category filtering, article preview, login, bookmark, and follow interactions",
+    "Added Playwright coverage for discovery, sign-in, and mobile rail behavior",
+    "Passed Harness Gate verification"
+  ],
+  "next": []
+}
