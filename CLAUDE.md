@@ -42,3 +42,22 @@ This project is indexed by GitNexus as **codex-harness-engineering-template** (1
 | Index, status, clean, wiki CLI commands | `.claude/skills/gitnexus/gitnexus-cli/SKILL.md` |
 
 <!-- gitnexus:end -->
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs for this repo live as GitHub issues; use the `gh` CLI.
+See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the default canonical labels: `needs-triage`, `needs-info`,
+`ready-for-agent`, `ready-for-human`, and `wontfix`.
+See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a multi-context repo. Read `CONTEXT-MAP.md`, relevant context
+`CONTEXT.md` files, and applicable ADRs.
+See `docs/agents/domain.md`.
