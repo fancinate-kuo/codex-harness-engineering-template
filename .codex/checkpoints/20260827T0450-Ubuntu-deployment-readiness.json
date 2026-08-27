@@ -13,7 +13,17 @@
     "Refreshed GitNexus and confirmed the current branch is indexed and up-to-date."
   ],
   "next": [
-    "Run final harness and graph gates, then commit and push the deployment readiness implementation.",
-    "Create the deployment readiness PR and confirm its CI checks before closing this stage."
-  ]
+    "Merge PR #13 into main and confirm the post-merge validation workflow."
+  ],
+  "verification": {
+    "deploymentTarget": "PASS: pnpm deployment:validate",
+    "unit": "PASS: 60 tests",
+    "integration": "PASS: 8 tests; 2 PostgreSQL tests skipped locally without HARNESS_DATABASE_URL",
+    "postgres": "PASS in PR #13 PostgreSQL production contract job",
+    "e2e": "PASS: 4 tests",
+    "architecture": "PASS",
+    "harness": "PASS: pnpm harness:verify",
+    "graph": "PASS: GitNexus refreshed and up-to-date",
+    "pr": "PASS: PR #13 checks all passed"
+  }
 }

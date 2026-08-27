@@ -8,7 +8,9 @@
     "Refactored Control Plane server startup into create/start interfaces with structured request/error logging, request ids, redaction, HTTP timeouts, graceful shutdown, SSE drain, and pool close.",
     "Added shared migration contract and database readiness adapter used by db:check and /ready; migrations remain explicit and are not run automatically by the server.",
     "Added local-skippable/CI-required PostgreSQL contract runner and GitHub Actions PostgreSQL 16 service job.",
-    "Updated OpenAPI, README, security/persistence docs, production runbook, observability guidance, architecture module docs, repo map, and business graph metadata."
+    "Updated OpenAPI, README, security/persistence docs, production runbook, observability guidance, architecture module docs, repo map, and business graph metadata.",
+    "Selected Ubuntu 24.04 LTS single-host as the first deployment target and implemented Caddy edge security, SOPS/age secrets, Vector audit shipping, and PostgreSQL/restic backup and restore in PR #13.",
+    "Confirmed PR #13 CI: Ubuntu deployment, Ubuntu, Windows, and PostgreSQL production contract checks all pass."
   ],
   "changedFiles": [
     "scripts/control-plane/server.mjs",
@@ -37,13 +39,13 @@
     "Do not add a database migration, auto-migrate on startup, cloud deployment, container image, or automatic release behavior in P2."
   ],
   "remaining": [
-    "Select the first deployment target and implement provider-specific edge security, secret management, durable audit shipping, and backup/restore baseline.",
-    "Keep the P2 application contract provider-neutral while documenting and testing the selected deployment adapter."
+    "Merge PR #13 into main and confirm the post-merge validation workflow."
   ],
   "risks": [
     "GitNexus impact for getPool is CRITICAL: 18 impacted symbols, 9 execution processes, and 3 modules; existing persistence tests and the new real-PostgreSQL suite cover the compatibility surface.",
     "PostgreSQL CI uses a service container only on Ubuntu; Windows continues to validate the cross-platform harness without a local database service.",
-    "P2 provides the application security/readiness baseline; TLS, identity, rate limiting, durable audit shipping, and backup/restore execution remain deployment work."
+    "The selected target is an operational baseline, not a managed deployment: operators must provide TLS DNS/ACME access, SOPS/age key custody, a durable HTTPS audit sink, and durable restic storage.",
+    "The P2 application contract remains provider-neutral; the Ubuntu adapter is intentionally a separate deployment boundary."
   ],
   "verification": {
     "lint": "PASS",
@@ -57,6 +59,8 @@
     "graph": "PASS: GitNexus 1.6.9 refreshed, 1839 nodes, 3259 edges, status up-to-date",
     "harness": "PASS: pnpm harness:verify",
     "diff": "PASS: git diff --check",
-    "postMergeCi": "PASS: main post-merge Validate workflow"
+    "postMergeCi": "PASS: main post-merge Validate workflow",
+    "deployment": "PASS: PR #13 Ubuntu deployment contract, Ubuntu, Windows, and PostgreSQL checks",
+    "pr": "PASS: https://github.com/fancinate-kuo/codex-harness-engineering-template/pull/13"
   }
 }
