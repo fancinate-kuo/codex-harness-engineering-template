@@ -1,5 +1,9 @@
 <template>
-  <div class="shell">
+  <div v-if="isForumHome" class="forum-shell">
+    <RouterView />
+  </div>
+
+  <div v-else class="shell">
     <aside class="sidebar">
       <div class="brand">
         <div class="brand-mark">H</div>
@@ -26,7 +30,11 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+const isForumHome = computed(() => route.name === 'forum-home')
 const connected = ref(false)
 let es: EventSource | null = null
 

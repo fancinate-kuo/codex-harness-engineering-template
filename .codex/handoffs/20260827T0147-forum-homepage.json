@@ -1,0 +1,34 @@
+{
+  "task": "forum-homepage",
+  "goal": "Build a polished, Apple-inspired Sora forum homepage in the existing Vue Control Plane with mock data and working prototype interactions.",
+  "completed": [
+    "Added the Sora forum homepage with a responsive desktop three-column layout, tablet two-column layout, and mobile collapsible rails.",
+    "Added fixed/compact glass Header with search, navigation, login, and persisted demo user menu.",
+    "Added category filtering, personal saved/following views, search suggestions and recent searches, article preview drawer, login modal, bookmark and follow actions.",
+    "Added accessibility labels, keyboard focus states, Escape handling, reduced-motion support, and responsive styling.",
+    "Updated the homepage E2E coverage for discovery, search, sign-in, and mobile rail behavior."
+  ],
+  "changedFiles": [
+    "apps/control-plane/index.html",
+    "apps/control-plane/src/App.vue",
+    "apps/control-plane/src/main.ts",
+    "apps/control-plane/src/styles.css",
+    "apps/control-plane/src/views/ForumView.vue",
+    "tests/e2e/control-plane.spec.ts"
+  ],
+  "decisions": [
+    "The existing apps/control-plane Vue entry remains the host, while /tasks and /evaluation routes are preserved.",
+    "Sora uses Traditional Chinese editorial content with a restrained Apple-inspired visual language and no external image dependency.",
+    "Authentication and content state are demo-only and persisted to localStorage as agreed for the prototype."
+  ],
+  "remaining": [],
+  "risks": [
+    "The forum is a front-end prototype; production API, account security, and server persistence are not implemented."
+  ],
+  "verification": {
+    "unit": "passed",
+    "integration": "passed",
+    "e2e": "passed (2 tests)",
+    "architecture": "passed"
+  }
+}
