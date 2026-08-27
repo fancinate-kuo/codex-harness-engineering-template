@@ -1,0 +1,27 @@
+[Unit]
+Description=Harness Control Plane audit shipper
+After=network-online.target harness-control-plane.service
+Wants=network-online.target
+RequiresMountsFor=/var/lib/harness/audit
+
+[Service]
+Type=simple
+User=vector
+Group=vector
+WorkingDirectory=/srv/harness/current
+Environment=SOPS_AGE_KEY_FILE=/etc/harness/age/keys.txt
+Environment=HARNESS_AUDIT_SECRETS_FILE=/etc/harness/secrets/audit-sink.json.enc
+Environment=HARNESS_VECTOR_CONFIG=/etc/vector/harness-audit.toml
+ExecStart=/usr/bin/node /srv/harness/current/deploy/ubuntu/bin/run-audit-shipper.mjs
+Restart=on-failure
+RestartSec=5s
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/var/lib/harness/audit
+ReadWritePaths=/var/lib/vector
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

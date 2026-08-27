@@ -28,4 +28,12 @@ the application interface while TLS, identity, RBAC, cookie CSRF, rate
 limiting, secret rotation, and durable audit shipping remain edge/deployment
 responsibilities.
 
+## Ubuntu Deployment Operations
+
+The deployment adapter owns the first concrete target: Ubuntu 24.04 with
+systemd, Caddy, SOPS/age, Vector, PostgreSQL 16, and restic. Its interface is
+the checked-in service/config contract plus safe backup/restore commands; it
+does not expose application secrets or bypass the Control Plane security
+policy.
+
 Add one section per real business capability.

@@ -1,0 +1,19 @@
+{
+  "task": "Ubuntu-deployment-readiness",
+  "status": "completed",
+  "createdAt": "2026-08-27T04:50:23.515Z",
+  "affectedModules": ["platform"],
+  "completed": [
+    "Selected Ubuntu 24.04 LTS single-host with systemd, Caddy, SOPS/age, Vector, PostgreSQL 16, and restic as the first deployment target.",
+    "Added Caddy TLS, security headers, body limit, loopback upstream, and credential/query redaction configuration.",
+    "Added SOPS/age runtime adapters with allow-listed secret documents and Vector exec secret protocol support.",
+    "Added Vector disk-buffered HTTPS audit shipping and hardened systemd service units.",
+    "Added checksummed PostgreSQL custom-format backup, guarded restore, and restic backup/restore commands.",
+    "Added deployment target validation, unit coverage, CI contract job, runbook, repo map, and business graph metadata.",
+    "Refreshed GitNexus and confirmed the current branch is indexed and up-to-date."
+  ],
+  "next": [
+    "Run final harness and graph gates, then commit and push the deployment readiness implementation.",
+    "Create the deployment readiness PR and confirm its CI checks before closing this stage."
+  ]
+}
