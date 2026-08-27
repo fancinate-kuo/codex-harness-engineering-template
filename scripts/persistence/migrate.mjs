@@ -1,9 +1,8 @@
 import fs from "node:fs";
-import path from "node:path";
 import { query, transaction, closePool } from "./lib/db.mjs";
+import { listMigrationVersions, migrationPath } from "./lib/migration-contract.mjs";
 
-const dir="db/migrations";
-const files=fs.readdirSync(dir).filter(f=>f.endsWith(".sql")).sort();
+const files=listMigrationVersions();
 
 try {
   await query("CREATE SCHEMA IF NOT EXISTS harness");
@@ -13,7 +12,7 @@ try {
   )`);
 
   for(const file of files) {
-    const sql=fs.readFileSync(path.join(dir,file),"utf8");
+    const sql=fs.readFileSync(migrationPath(file),"utf8");
     const applied = await transaction(async client => {
       await client.query("SELECT pg_advisory_xact_lock(hashtext('harness:migrations'))");
       const existing = await client.query(

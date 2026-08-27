@@ -14,6 +14,13 @@
       "features": [
         "sora.article.browse"
       ]
+    },
+    {
+      "id": "REQ-PLATFORM-001",
+      "title": "Operators can run the Control Plane with verified production readiness",
+      "features": [
+        "platform.production-readiness"
+      ]
     }
   ],
   "features": [
@@ -57,6 +64,27 @@
         "sora-team"
       ],
       "risk": "medium"
+    },
+    {
+      "id": "platform.production-readiness",
+      "title": "Verify Control Plane production readiness",
+      "capability": "platform.runtime-readiness",
+      "module": "platform",
+      "apis": [
+        "GET /health",
+        "GET /ready"
+      ],
+      "tables": [],
+      "tests": [
+        "tests/unit/production-readiness",
+        "tests/integration/control-plane-readiness",
+        "tests/integration/postgres-readiness"
+      ],
+      "adrs": [],
+      "owners": [
+        "platform-team"
+      ],
+      "risk": "high"
     }
   ],
   "capabilities": [
@@ -72,6 +100,13 @@
       "title": "Sora content discovery",
       "modules": [
         "forum"
+      ]
+    },
+    {
+      "id": "platform.runtime-readiness",
+      "title": "Control Plane runtime readiness",
+      "modules": [
+        "platform"
       ]
     }
   ],
@@ -89,6 +124,11 @@
       "domain": "packages/reference/src/domain",
       "contracts": "packages/reference/src/contracts",
       "infrastructure": "packages/reference/src/infrastructure"
+    },
+    {
+      "id": "platform",
+      "controlPlane": "scripts/control-plane",
+      "persistence": "scripts/persistence"
     }
   ],
   "apis": [
@@ -103,6 +143,14 @@
     {
       "id": "GET /forum/articles/:slug",
       "feature": "sora.article.browse"
+    },
+    {
+      "id": "GET /health",
+      "feature": "platform.production-readiness"
+    },
+    {
+      "id": "GET /ready",
+      "feature": "platform.production-readiness"
     }
   ],
   "tables": [
@@ -134,6 +182,24 @@
       "id": "tests/e2e/forum/reply-edit",
       "verifies": [
         "forum.reply.edit"
+      ]
+    },
+    {
+      "id": "tests/unit/production-readiness",
+      "verifies": [
+        "platform.production-readiness"
+      ]
+    },
+    {
+      "id": "tests/integration/control-plane-readiness",
+      "verifies": [
+        "platform.production-readiness"
+      ]
+    },
+    {
+      "id": "tests/integration/postgres-readiness",
+      "verifies": [
+        "platform.production-readiness"
       ]
     }
   ],

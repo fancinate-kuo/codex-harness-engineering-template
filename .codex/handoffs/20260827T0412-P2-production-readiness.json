@@ -1,0 +1,62 @@
+{
+  "task": "P2-production-readiness",
+  "goal": "Deliver a provider-neutral production readiness baseline for the Control Plane and PostgreSQL runtime without adding cloud-specific deployment or first-party identity.",
+  "completed": [
+    "Created codex/p2-production-readiness stacked from P1 commit e024603 while P1 PR #10 remains open.",
+    "Added centralized Control Plane runtime configuration with production fail-closed token/origin policy, bounded timeouts, version reporting, audit sink configuration, and database pool validation.",
+    "Added GET /ready readiness probe with safe 503 responses for unavailable or incomplete PostgreSQL state; retained GET /health as liveness.",
+    "Refactored Control Plane server startup into create/start interfaces with structured request/error logging, request ids, redaction, HTTP timeouts, graceful shutdown, SSE drain, and pool close.",
+    "Added shared migration contract and database readiness adapter used by db:check and /ready; migrations remain explicit and are not run automatically by the server.",
+    "Added local-skippable/CI-required PostgreSQL contract runner and GitHub Actions PostgreSQL 16 service job.",
+    "Updated OpenAPI, README, security/persistence docs, production runbook, observability guidance, architecture module docs, repo map, and business graph metadata."
+  ],
+  "changedFiles": [
+    "scripts/control-plane/server.mjs",
+    "scripts/control-plane/lib/config.mjs",
+    "scripts/control-plane/lib/readiness.mjs",
+    "scripts/control-plane/lib/security.mjs",
+    "scripts/persistence/lib/db.mjs",
+    "scripts/persistence/lib/database-readiness.mjs",
+    "scripts/persistence/lib/migration-contract.mjs",
+    "scripts/persistence/migrate.mjs",
+    "scripts/persistence/check.mjs",
+    "scripts/persistence/test-postgres.mjs",
+    "tests/unit/production-readiness.test.mjs",
+    "tests/integration/control-plane-readiness.test.mjs",
+    "tests/integration/postgres-readiness.test.mjs",
+    ".github/workflows/validate.yml",
+    ".codex/control-plane/api.openapi.yaml",
+    "docs/control-plane/production-readiness.md",
+    "graph/business/business-graph.json"
+  ],
+  "decisions": [
+    "Use one gpt-5.6-sol high-reasoning coding agent; shared server, security, persistence, CI, and documentation contracts make parallel agents more likely to drift.",
+    "Keep Bearer token application security and delegate TLS, OIDC/RBAC, cookie CSRF, rate limiting, secret rotation, and durable audit shipping to the edge/deployment platform.",
+    "Keep /health as liveness and add /ready as readiness; probes remain unauthenticated for orchestration but still observe the origin allowlist when an Origin header is supplied.",
+    "Use GitHub Actions as canonical CI with an Ubuntu PostgreSQL 16 service; keep filesystem fallback and Windows harness validation.",
+    "Do not add a database migration, auto-migrate on startup, cloud deployment, container image, or automatic release behavior in P2."
+  ],
+  "remaining": [
+    "Run the forced PostgreSQL integration gate in GitHub Actions after push; local Docker daemon and psql are unavailable.",
+    "After P1 PR #10 merges, align/rebase this stacked branch onto the merged main before opening the P2 PR.",
+    "Commit/push/PR creation is intentionally not performed in this implementation turn."
+  ],
+  "risks": [
+    "GitNexus impact for getPool is CRITICAL: 18 impacted symbols, 9 execution processes, and 3 modules; existing persistence tests and the new real-PostgreSQL suite cover the compatibility surface.",
+    "PostgreSQL CI uses a service container only on Ubuntu; Windows continues to validate the cross-platform harness without a local database service.",
+    "P1 PR #10 is still open, so the current P2 branch includes P1 as its parent until the branch is aligned after merge."
+  ],
+  "verification": {
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "unit": "PASS: 53 tests",
+    "integration": "PASS: 8 tests; 2 PostgreSQL tests skipped without local DB",
+    "postgres": "NOT RUN locally: test runner skipped because HARNESS_DATABASE_URL is absent; CI sets HARNESS_REQUIRE_POSTGRES=1",
+    "e2e": "PASS: 4 tests",
+    "architecture": "PASS",
+    "businessGraph": "PASS: 3 requirements, 3 features, 3 capabilities, 3 modules",
+    "graph": "PASS: GitNexus 1.6.9 refreshed, 1839 nodes, 3259 edges, status up-to-date",
+    "harness": "PASS: pnpm harness:verify",
+    "diff": "PASS: git diff --check"
+  }
+}

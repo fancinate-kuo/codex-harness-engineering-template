@@ -1,0 +1,34 @@
+{
+  "task": "P2-production-readiness",
+  "status": "completed",
+  "createdAt": "2026-08-27T03:51:33.146Z",
+  "affectedModules": ["platform", "control-plane", "persistence", "governance", "business-graph"],
+  "completed": [
+    "Added centralized Control Plane configuration with production fail-closed token/origin checks and bounded timeout/pool settings",
+    "Added /ready runtime/database readiness probe while preserving /health liveness behavior",
+    "Refactored server startup into testable start/create interfaces with structured logs, redaction, timeouts, SSE drain, and PostgreSQL pool shutdown",
+    "Added shared migration contract and database readiness checks used by db:check and /ready",
+    "Added PostgreSQL contract test runner and GitHub Actions PostgreSQL 16 service job",
+    "Updated OpenAPI, README, production runbook, security/persistence docs, repo map, and business graph"
+  ],
+  "next": [
+    "Run the forced PostgreSQL CI service job after push",
+    "Commit and push only when explicitly requested"
+  ],
+  "verification": {
+    "lint": "PASS",
+    "unit": "PASS: 53 tests",
+    "integration": "PASS: 8 tests; 2 PostgreSQL tests skipped without local DB",
+    "e2e": "PASS: 4 tests",
+    "architecture": "PASS",
+    "businessGraph": "PASS: 3 requirements/features/capabilities/modules",
+    "harness": "PASS: pnpm harness:verify",
+    "graph": "PASS: GitNexus 1.6.9, 1839 nodes, 3259 edges, fresh",
+    "postgres": "NOT RUN locally: Docker daemon and psql unavailable; CI is configured to require PostgreSQL"
+  },
+  "risks": [
+    "GitNexus reports CRITICAL impact for the shared getPool seam: 18 symbols, 9 processes, and 3 modules; compatibility is covered by existing persistence tests plus the new PostgreSQL suite",
+    "P1 PR #10 remains open, so this branch is stacked from e024603 and must be rebased/aligned after P1 merges",
+    "PostgreSQL real-service verification remains pending until CI runs"
+  ]
+}

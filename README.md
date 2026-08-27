@@ -423,6 +423,8 @@ pnpm harness:control:dashboard-data
 ```
 
 Key API endpoints:
+- `GET /health` (liveness)
+- `GET /ready` (runtime/database readiness)
 - `GET /overview`
 - `GET /tasks`
 - `GET /tasks/:taskId`
@@ -498,8 +500,8 @@ Initialize:
 
 ```bash
 pnpm harness:runtime:check
-pnpm db:check
 pnpm db:migrate
+pnpm db:check
 pnpm db:seed
 ```
 
@@ -518,3 +520,7 @@ pnpm harness:events TASK-001
 The Control Plane selects the PostgreSQL runtime adapter when configured;
 without a database URL it stays in the filesystem fallback. Repository
 configuration remains versioned in Git in either mode.
+
+Production readiness, release sequencing, health probes, edge responsibilities,
+backup, and rollback guidance are documented in
+`docs/control-plane/production-readiness.md`.

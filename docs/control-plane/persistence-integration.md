@@ -6,10 +6,11 @@ Runtime store transition:
 
 1. set `HARNESS_RUNTIME_STORE=postgres` with `HARNESS_DATABASE_URL`
 2. run `pnpm db:migrate` and `pnpm db:seed`
-3. persist an initial snapshot with `pnpm harness:persist:snapshot TASK-001`
-4. Control Plane reads use the PostgreSQL adapter while repository configuration
+3. run `pnpm db:check` and wait for `GET /ready` to return `200`
+4. persist an initial snapshot with `pnpm harness:persist:snapshot TASK-001`
+5. Control Plane reads use the PostgreSQL adapter while repository configuration
    remains in Git
-5. keep filesystem mode for local/offline fallback and parity checks
+6. keep filesystem mode for local/offline fallback and parity checks
 
 The Control Plane does not access PostgreSQL directly. It uses the
 `RuntimeReadModel` seam, which selects either the filesystem adapter or the
