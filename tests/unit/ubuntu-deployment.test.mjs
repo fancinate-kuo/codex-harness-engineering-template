@@ -113,11 +113,13 @@ describe("Ubuntu deployment target", () => {
     const environment = buildPostgresEnvironment(connection, "/tmp/harness-pgpass", {
       PGPASSWORD: "runner-default",
       HARNESS_DATABASE_URL: "postgres://should-not-leak",
+      HARNESS_DATABASE_SECRETS_FILE: "/etc/harness/secrets/control-plane.json.enc",
       PGSERVICEFILE: "/tmp/postgresql-service.conf",
     });
     expect(environment.PGPASSFILE).toBe("/tmp/harness-pgpass");
     expect(environment.PGPASSWORD).toBeUndefined();
     expect(environment.HARNESS_DATABASE_URL).toBeUndefined();
+    expect(environment.HARNESS_DATABASE_SECRETS_FILE).toBeUndefined();
     expect(environment.PGSERVICEFILE).toBeUndefined();
     expect(environment.PGSSLMODE).toBe("require");
     expect(backupFilePath("/var/lib/harness/backups", new Date("2026-08-27T04:00:00.000Z")))
