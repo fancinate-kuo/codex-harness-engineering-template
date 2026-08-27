@@ -1,0 +1,30 @@
+data_dir = "/var/lib/vector"
+
+[secret.audit_sink]
+type = "exec"
+command = ["/usr/bin/node", "/srv/harness/current/deploy/ubuntu/bin/read-audit-secret.mjs", "/etc/harness/secrets/audit-sink.json.enc"]
+timeout = 5
+
+[sources.control_plane_audit]
+type = "file"
+include = ["/var/lib/harness/audit/control-plane.jsonl"]
+read_from = "beginning"
+ignore_older_secs = 604800
+
+[sinks.durable_audit]
+type = "http"
+inputs = ["control_plane_audit"]
+uri = "SECRET[audit_sink.HARNESS_AUDIT_SINK_URL]"
+method = "post"
+compression = "gzip"
+encoding.codec = "json"
+request.headers.Authorization = "Bearer SECRET[audit_sink.HARNESS_AUDIT_SINK_TOKEN]"
+request.headers.Content-Type = "application/json"
+batch.max_events = 100
+batch.timeout_secs = 5
+healthcheck.enabled = true
+
+[sinks.durable_audit.buffer]
+type = "disk"
+max_size = 1073741824
+when_full = "block"

@@ -4,6 +4,10 @@ This runbook defines the provider-neutral production contract for the Harness
 Control Plane. It does not provision a cloud service or replace an identity
 provider.
 
+The first concrete deployment target is documented in
+[`ubuntu-deployment.md`](./ubuntu-deployment.md): Ubuntu 24.04 LTS, systemd,
+Caddy, SOPS/age, Vector, PostgreSQL 16, and restic.
+
 ## Required configuration
 
 | Variable | Required | Purpose |

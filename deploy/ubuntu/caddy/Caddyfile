@@ -1,0 +1,42 @@
+{
+	email {$HARNESS_ACME_EMAIL}
+}
+
+{$HARNESS_PUBLIC_HOST} {
+	encode zstd gzip
+
+	# Caddy manages public TLS; the application remains bound to loopback.
+	tls {
+		protocols tls1.2 tls1.3
+	}
+
+	request_body {
+		max_size 1MB
+	}
+
+	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		Permissions-Policy "camera=(), geolocation=(), microphone=()"
+	}
+
+	log {
+		output file /var/log/caddy/harness-access.jsonl {
+			roll_size 100MiB
+			roll_keep 14
+			roll_keep_for 336h
+		}
+		# Keep edge logs useful without duplicating credentials or query secrets.
+		format filter {
+			request>headers>Authorization delete
+			request>headers>Proxy-Authorization delete
+			request>headers>Cookie delete
+			request>uri delete
+			wrap json
+		}
+	}
+
+	reverse_proxy 127.0.0.1:4317
+}

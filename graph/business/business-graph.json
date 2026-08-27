@@ -21,6 +21,13 @@
       "features": [
         "platform.production-readiness"
       ]
+    },
+    {
+      "id": "REQ-PLATFORM-002",
+      "title": "Operators can deploy and recover the Control Plane through a repeatable Ubuntu target",
+      "features": [
+        "platform.ubuntu-deployment"
+      ]
     }
   ],
   "features": [
@@ -85,6 +92,22 @@
         "platform-team"
       ],
       "risk": "high"
+    },
+    {
+      "id": "platform.ubuntu-deployment",
+      "title": "Operate the Ubuntu deployment target",
+      "capability": "platform.deployment-operations",
+      "module": "platform",
+      "apis": [],
+      "tables": [],
+      "tests": [
+        "tests/unit/ubuntu-deployment"
+      ],
+      "adrs": [],
+      "owners": [
+        "platform-team"
+      ],
+      "risk": "high"
     }
   ],
   "capabilities": [
@@ -108,6 +131,13 @@
       "modules": [
         "platform"
       ]
+    },
+    {
+      "id": "platform.deployment-operations",
+      "title": "Ubuntu edge, secret, audit, and recovery operations",
+      "modules": [
+        "platform"
+      ]
     }
   ],
   "modules": [
@@ -128,7 +158,8 @@
     {
       "id": "platform",
       "controlPlane": "scripts/control-plane",
-      "persistence": "scripts/persistence"
+      "persistence": "scripts/persistence",
+      "deployment": "deploy/ubuntu"
     }
   ],
   "apis": [
@@ -200,6 +231,12 @@
       "id": "tests/integration/postgres-readiness",
       "verifies": [
         "platform.production-readiness"
+      ]
+    },
+    {
+      "id": "tests/unit/ubuntu-deployment",
+      "verifies": [
+        "platform.ubuntu-deployment"
       ]
     }
   ],

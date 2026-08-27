@@ -25,3 +25,6 @@ graph/joern/workspace/
 .codex/observability/control-plane/*
 !.codex/observability/control-plane/README.md
 .codex/orchestration/locks/*.lock
+deploy/ubuntu/secrets/*.enc
+deploy/ubuntu/secrets/*.json
+!deploy/ubuntu/secrets/*.json.example

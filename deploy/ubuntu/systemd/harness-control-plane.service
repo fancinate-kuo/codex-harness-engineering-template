@@ -1,0 +1,32 @@
+[Unit]
+Description=Harness Control Plane
+After=network-online.target
+Wants=network-online.target
+RequiresMountsFor=/srv/harness/current /var/lib/harness/audit
+
+[Service]
+Type=simple
+User=harness
+Group=harness
+WorkingDirectory=/srv/harness/current
+Environment=NODE_ENV=production
+Environment=HARNESS_CONTROL_PLANE_HOST=127.0.0.1
+Environment=HARNESS_CONTROL_PLANE_PORT=4317
+Environment=HARNESS_RUNTIME_STORE=postgres
+Environment=HARNESS_CONTROL_PLANE_AUDIT_FILE=/var/lib/harness/audit/control-plane.jsonl
+Environment=HARNESS_CONTROL_PLANE_SECRETS_FILE=/etc/harness/secrets/control-plane.json.enc
+Environment=SOPS_AGE_KEY_FILE=/etc/harness/age/keys.txt
+ExecStart=/usr/bin/node /srv/harness/current/deploy/ubuntu/bin/run-control-plane.mjs
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=30s
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/harness/audit
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

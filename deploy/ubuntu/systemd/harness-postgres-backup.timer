@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Harness PostgreSQL backup
+
+[Timer]
+OnCalendar=*-*-* 02:00:00
+RandomizedDelaySec=15m
+Persistent=true
+Unit=harness-postgres-backup.service
+
+[Install]
+WantedBy=timers.target

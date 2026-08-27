@@ -1,0 +1,28 @@
+[Unit]
+Description=Harness PostgreSQL backup and durable archive
+After=network-online.target
+Wants=network-online.target
+RequiresMountsFor=/var/lib/harness/backups /var/lib/harness/audit
+
+[Service]
+Type=oneshot
+User=harness
+Group=harness
+WorkingDirectory=/srv/harness/current
+Environment=HARNESS_DATABASE_SECRETS_FILE=/etc/harness/secrets/control-plane.json.enc
+Environment=HARNESS_RESTIC_SECRETS_FILE=/etc/harness/secrets/restic.json.enc
+Environment=HARNESS_BACKUP_DIR=/var/lib/harness/backups
+Environment=HARNESS_AUDIT_DIR=/var/lib/harness/audit
+Environment=SOPS_AGE_KEY_FILE=/etc/harness/age/keys.txt
+ExecStart=/usr/bin/node /srv/harness/current/deploy/ubuntu/bin/postgres-backup.mjs backup
+ExecStartPost=/usr/bin/node /srv/harness/current/deploy/ubuntu/bin/restic-backup.mjs backup
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/harness/backups
+ReadOnlyPaths=/var/lib/harness/audit
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

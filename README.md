@@ -524,3 +524,7 @@ configuration remains versioned in Git in either mode.
 Production readiness, release sequencing, health probes, edge responsibilities,
 backup, and rollback guidance are documented in
 `docs/control-plane/production-readiness.md`.
+
+The first deployment target implementation is documented in
+`docs/control-plane/ubuntu-deployment.md`, with checked-in systemd, Caddy,
+Vector, secret-runtime, and backup adapters under `deploy/ubuntu/`.
