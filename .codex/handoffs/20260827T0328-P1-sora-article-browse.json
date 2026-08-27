@@ -1,0 +1,48 @@
+{
+  "task": "P1-sora-article-browse",
+  "status": "completed",
+  "goal": "Replace the Sora mock homepage with a verifiable read-only article browsing vertical slice while keeping the Control Plane root entry stable.",
+  "completed": [
+    "Added forum contracts and domain validation for article summaries, details, categories, and query normalization.",
+    "Added a filesystem seed repository, application service, and HTTP adapter for GET /forum/articles and GET /forum/articles/:slug.",
+    "Extracted Sora into the @harness/web forum feature with loading, error, empty, category, search, and direct article detail states.",
+    "Removed Sora localStorage demo authentication, bookmark, follow, and login flows.",
+    "Registered Sora business graph metadata and OpenAPI routes."
+  ],
+  "changedFiles": [
+    "apps/api/src/modules/forum",
+    "apps/web/src/features/forum",
+    "packages/contracts/src/forum",
+    "packages/domain/src/forum",
+    "apps/control-plane/src/main.ts",
+    "scripts/control-plane/server.mjs",
+    "tests/unit/forum-article.test.ts",
+    "tests/unit/forum-repository.test.mjs",
+    "tests/integration/forum/article-browsing.test.mjs",
+    "tests/e2e/forum/article-browsing.spec.ts",
+    "graph/business/business-graph.json",
+    ".codex/control-plane/api.openapi.yaml"
+  ],
+  "decisions": [
+    "Keep / as the Control Plane overview and use /forum plus /forum/articles/:slug for Sora.",
+    "Use module-owned filesystem seed data for P1 and keep the repository interface replaceable by PostgreSQL later.",
+    "Keep Sora browsing behind the existing Control Plane origin and authorization boundary.",
+    "Use one implementation agent because the cross-layer contract and route changes are tightly coupled."
+  ],
+  "remaining": [
+    "Commit and push only when explicitly requested.",
+    "Identity, bookmarks, follows, replies, and PostgreSQL persistence remain future slices."
+  ],
+  "risks": [
+    "GitNexus classifies the server/router diff as medium risk because it touches the existing security/origin execution flow; no HIGH or CRITICAL impact was reported.",
+    "Production Sora browsing still inherits the current Control Plane authentication policy; a public unauthenticated deployment would require a separate security decision."
+  ],
+  "verification": {
+    "unit": "PASS: 48 tests",
+    "integration": "PASS: 7 tests",
+    "e2e": "PASS: 4 tests",
+    "architecture": "PASS",
+    "harness": "PASS: pnpm harness:verify",
+    "graph": "PASS: GitNexus refreshed, graph status up-to-date"
+  }
+}

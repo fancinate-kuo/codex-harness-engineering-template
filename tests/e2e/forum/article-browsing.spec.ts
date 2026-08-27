@@ -1,0 +1,44 @@
+import { expect, test } from '@playwright/test'
+
+test('Sora forum supports API-backed discovery and shareable article detail', async ({ page }) => {
+  await page.goto('/forum')
+
+  await expect(page.getByRole('heading', { name: /值得思考的事.*值得被分享/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '全部文章' })).toBeVisible()
+  await expect(page.getByText('當科技變得安靜，我們終於聽見自己')).toBeVisible()
+  await expect(page.getByRole('link', { name: '管理後台' })).toHaveAttribute('href', '/')
+  await expect(page.getByRole('button', { name: '登入' })).not.toBeVisible()
+
+  await page.getByRole('button', { name: /設計/ }).first().click()
+  await expect(page.getByRole('button', { name: '閱讀文章：留白不是空白，是給想法呼吸的地方' })).toBeVisible()
+
+  await page.getByRole('button', { name: '開啟搜尋' }).click()
+  await page.getByRole('searchbox', { name: '搜尋文章、主題或作者' }).fill('留白')
+  await page.getByRole('searchbox', { name: '搜尋文章、主題或作者' }).press('Enter')
+  await expect(page.getByText('搜尋結果')).toBeVisible()
+  await expect(page.getByRole('button', { name: '閱讀文章：留白不是空白，是給想法呼吸的地方' })).toBeVisible()
+
+  await page.getByRole('button', { name: '閱讀文章：留白不是空白，是給想法呼吸的地方' }).click()
+  await expect(page).toHaveURL(/\/forum\/articles\/space-to-breathe$/)
+  await expect(page.getByRole('heading', { name: '留白不是空白，是給想法呼吸的地方' })).toBeVisible()
+  await expect(page.getByText('設計不是填滿畫面，而是留下對的空間。')).toBeVisible()
+})
+
+test('Sora article detail is directly addressable', async ({ page }) => {
+  await page.goto('/forum/articles/space-to-breathe')
+
+  await expect(page.getByRole('heading', { name: '留白不是空白，是給想法呼吸的地方' })).toBeVisible()
+  await expect(page.getByRole('link', { name: '回到文章列表' }).first()).toHaveAttribute('href', '/forum')
+})
+
+test('Sora mobile layout keeps secondary rails collapsible', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/forum')
+
+  await expect(page.getByRole('heading', { name: '全部文章' })).toBeVisible()
+  const trendingToggle = page.getByRole('button', { name: '熱門文章' })
+  await expect(trendingToggle).toHaveAttribute('aria-expanded', 'false')
+  await trendingToggle.click()
+  await expect(trendingToggle).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.getByRole('button', { name: /01 留白不是空白/ })).toBeVisible()
+})

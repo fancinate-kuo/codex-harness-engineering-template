@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.0.0",
   "scripts": {
     "lint": "eslint scripts apps packages tests --max-warnings 0",
-    "typecheck": "tsc -p tsconfig.json --noEmit && pnpm --dir apps/control-plane typecheck",
+    "typecheck": "tsc -p tsconfig.json --noEmit && pnpm --dir apps/web typecheck && pnpm --dir apps/control-plane typecheck",
     "test:unit": "vitest run tests/unit --config vitest.config.ts",
     "test:integration": "vitest run tests/integration --config vitest.config.ts",
     "test:e2e": "playwright test --config playwright.config.ts",

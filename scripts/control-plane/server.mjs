@@ -2,6 +2,7 @@ import http from "node:http";
 import { spawn } from "node:child_process";
 import { readJson } from "./lib/read-model.mjs";
 import { createRuntimeReadModel } from "./lib/runtime-read-model.mjs";
+import { handleForumRequest } from "../../apps/api/src/modules/forum/index.mjs";
 import {
   actorFromRequest,
   appendMutationAudit,
@@ -107,6 +108,16 @@ const server=http.createServer(async (req,res)=>{
   if(!isAuthorized(req,security)){
     res.setHeader("www-authenticate","Bearer");
     send(res,401,{error:"authentication_required"},req);
+    return;
+  }
+
+  const forumResponse=await handleForumRequest({
+    method:req.method,
+    pathname:url.pathname,
+    searchParams:url.searchParams
+  });
+  if(forumResponse){
+    send(res,forumResponse.status,forumResponse.body,req);
     return;
   }
 

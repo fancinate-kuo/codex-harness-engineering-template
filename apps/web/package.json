@@ -1,0 +1,23 @@
+{
+  "name": "@harness/web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./forum": "./src/features/forum/index.ts"
+  },
+  "dependencies": {
+    "@harness/contracts": "workspace:*",
+    "vue": "^3.5.0",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.8.0",
+    "vue-tsc": "^3.0.0"
+  },
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit"
+  }
+}
