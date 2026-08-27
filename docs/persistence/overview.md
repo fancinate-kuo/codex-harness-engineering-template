@@ -47,3 +47,5 @@ PostgreSQL adapter; otherwise filesystem mode is selected. Invalid or partial
 PostgreSQL configuration fails during startup instead of silently falling back.
 
 Run `pnpm harness:runtime:check` to inspect the selected mode.
+Run `pnpm db:check` after migrations to verify connectivity, the migration
+tracking table, and that every repository migration is applied.

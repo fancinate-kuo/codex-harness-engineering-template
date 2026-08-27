@@ -21,15 +21,26 @@ export function createControlPlaneSecurityConfig({
   port = 4317,
   config = {},
   env = process.env,
+  production = false,
 } = {}) {
   const token = env.HARNESS_CONTROL_PLANE_TOKEN?.trim() || null
-  if (!isLoopbackHost(host) && !token) {
-    throw new Error('HARNESS_CONTROL_PLANE_TOKEN is required when binding outside loopback')
+  if ((production || !isLoopbackHost(host)) && !token) {
+    throw new Error('HARNESS_CONTROL_PLANE_TOKEN is required in production or outside loopback')
   }
 
-  const configuredOrigins = env.HARNESS_CONTROL_PLANE_ORIGINS
+  const environmentOrigins = env.HARNESS_CONTROL_PLANE_ORIGINS
     ? env.HARNESS_CONTROL_PLANE_ORIGINS.split(',').map(value => value.trim()).filter(Boolean)
-    : config.security?.allowedOrigins
+    : undefined
+  const configuredOrigins = environmentOrigins ?? config.security?.allowedOrigins
+  if (configuredOrigins !== undefined && !Array.isArray(configuredOrigins)) {
+    throw new Error('Control Plane allowed origins must be an array')
+  }
+  if (configuredOrigins?.some(origin => typeof origin !== 'string' || !origin || origin === '*')) {
+    throw new Error('Control Plane allowed origins must be non-empty explicit origins')
+  }
+  if (production && !environmentOrigins?.length) {
+    throw new Error('HARNESS_CONTROL_PLANE_ORIGINS is required in production')
+  }
   const allowedOrigins = configuredOrigins?.length
     ? [...new Set(configuredOrigins)]
     : [`http://${host}:${port}`, 'http://127.0.0.1:4318', 'http://localhost:4318']

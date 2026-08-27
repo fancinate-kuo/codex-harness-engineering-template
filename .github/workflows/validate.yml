@@ -80,3 +80,46 @@ jobs:
             dist/
             playwright-report/
             test-results/
+
+  postgres:
+    name: PostgreSQL production contract
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: harness
+          POSTGRES_PASSWORD: harness
+          POSTGRES_DB: harness
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U harness -d harness"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      HARNESS_DATABASE_URL: postgres://harness:harness@127.0.0.1:5432/harness
+      HARNESS_RUNTIME_STORE: postgres
+      HARNESS_REQUIRE_POSTGRES: '1'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.0.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run PostgreSQL production contract tests
+        run: pnpm test:postgres

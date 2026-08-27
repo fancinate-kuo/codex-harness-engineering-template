@@ -19,6 +19,15 @@
       "tests": [
         "tests/unit/reference-module.test.ts"
       ]
+    },
+    "platform": {
+      "controlPlane": "scripts/control-plane",
+      "persistence": "scripts/persistence",
+      "tests": [
+        "tests/unit/production-readiness.test.mjs",
+        "tests/integration/control-plane-readiness.test.mjs",
+        "tests/integration/postgres-readiness.test.mjs"
+      ]
     }
   }
 }

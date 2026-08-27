@@ -5,10 +5,13 @@ operation. It is still not an identity provider or a complete RBAC system.
 
 ## Runtime policy
 
-- loopback binding is allowed without a token for local development;
-- any non-loopback binding requires `HARNESS_CONTROL_PLANE_TOKEN` at startup;
+- loopback binding is allowed without a token for non-production local development;
+- any non-loopback binding, and every production binding, requires
+  `HARNESS_CONTROL_PLANE_TOKEN` at startup;
+- production startup also requires the `HARNESS_CONTROL_PLANE_ORIGINS`
+  environment variable with at least one explicit origin;
 - when a token is configured, API and SSE requests require `Authorization:
-  Bearer <token>`; `/health` remains suitable for a liveness probe;
+  Bearer <token>`; `/health` is liveness and `/ready` is readiness;
 - `HARNESS_CONTROL_PLANE_ORIGINS` or `security.allowedOrigins` provides the
   explicit CORS allowlist; wildcard CORS is not used;
 - request bodies are JSON objects capped by `maxBodyBytes` (64 KiB by default);

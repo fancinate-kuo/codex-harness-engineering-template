@@ -1,13 +1,22 @@
 openapi: 3.1.0
 info:
   title: Codex Harness Control Plane API
-  version: 0.14.0
+  version: 0.17.0
 paths:
   /health:
     get:
+      description: Unauthenticated liveness probe; origin allowlist applies when an Origin header is supplied.
       responses:
         '200':
-          description: OK
+          description: Control Plane process is alive
+  /ready:
+    get:
+      description: Unauthenticated readiness probe; origin allowlist applies when an Origin header is supplied. PostgreSQL mode requires connectivity and all migrations to be applied.
+      responses:
+        '200':
+          description: Runtime is ready to receive traffic
+        '503':
+          description: Runtime dependency or migration readiness failed
   /tasks:
     get:
       responses:
